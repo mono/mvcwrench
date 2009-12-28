@@ -1,0 +1,14 @@
+C:\Users\Jonathan\Documents\Visual Studio 2008\Projects\MvcWrench\MvcMonkey\bin\MvcMonkey.dll
+C:\Users\Jonathan\Documents\Visual Studio 2008\Projects\MvcWrench\MvcMonkey\bin\MvcMonkey.XmlSerializers.dll
+C:\Users\Jonathan\Documents\Visual Studio 2008\Projects\MvcWrench\MvcMonkey\bin\MvcMonkey.pdb
+C:\Users\Jonathan\Documents\Visual Studio 2008\Projects\MvcWrench\MvcMonkey\obj\Release\ResolveAssemblyReference.cache
+C:\Users\Jonathan\Documents\Visual Studio 2008\Projects\MvcWrench\MvcMonkey\obj\Release\MvcMonkey.dll
+C:\Users\Jonathan\Documents\Visual Studio 2008\Projects\MvcWrench\MvcMonkey\obj\Release\MvcMonkey.pdb
+C:\Users\Jonathan\Documents\Visual Studio 2008\Projects\MvcWrench\MvcMonkey\obj\Release\MvcMonkey.XmlSerializers.dll
+C:\Users\Jonathan\Documents\Visual Studio 2008\Projects\MvcWrench\obj\Release\ResolveAssemblyReference.cache
+C:\Users\Jonathan\Documents\Visual Studio 2008\Projects\MvcWrench\obj\Release\MvcMonkey.dll
+C:\Users\Jonathan\Documents\Visual Studio 2008\Projects\MvcWrench\obj\Release\MvcMonkey.pdb
+C:\Users\Jonathan\Documents\Visual Studio 2008\Projects\MvcWrench\obj\Release\MvcMonkey.XmlSerializers.dll
+C:\Users\Jonathan\Documents\Visual Studio 2008\Projects\MvcWrench\bin\MvcMonkey.dll
+C:\Users\Jonathan\Documents\Visual Studio 2008\Projects\MvcWrench\bin\MvcMonkey.XmlSerializers.dll
+C:\Users\Jonathan\Documents\Visual Studio 2008\Projects\MvcWrench\bin\MvcMonkey.pdb

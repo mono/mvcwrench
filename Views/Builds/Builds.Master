@@ -1,0 +1,18 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
+    <asp:ContentPlaceHolder ID="TitleContent" runat="server">
+    </asp:ContentPlaceHolder>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <div id="line-background">
+        <div id="left-content">
+            <div id="TreeMenu1" class="treemenu">
+                <% Html.RenderPartial ("TreeMenu", ViewData["TreeView"]); %>
+            </div>
+        </div>
+        <div id="right-content">
+            <asp:ContentPlaceHolder ID="right_content_placeholder" runat="server">
+            </asp:ContentPlaceHolder>
+        </div></div>
+</asp:Content>

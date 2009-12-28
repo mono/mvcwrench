@@ -1,0 +1,295 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{35DC0D19-E4A0-4AA8-B42B-8DAE75827D95}</ProjectGuid>
+    <ProjectTypeGuids>{603c0e0b-db56-11dc-be95-000d561079b0};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MvcMonkey</RootNamespace>
+    <AssemblyName>MvcMonkey</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel.Web">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Abstractions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Web.Services" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\BuildsController.cs" />
+    <Compile Include="Controllers\StatusController.cs" />
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\BugzillaInterface.cs" />
+    <Compile Include="Helpers\ExpiringCache.cs" />
+    <Compile Include="Helpers\MonkeyWrenchHelper.cs" />
+    <Compile Include="Helpers\UserHelpers.cs" />
+    <Compile Include="Models\Gui\Shared\BreadCrumb.cs" />
+    <Compile Include="Models\Gui\Status\ClassStatus.cs" />
+    <Compile Include="Models\Gui\Builds\StatusStrip.cs" />
+    <Compile Include="Models\Gui\Shared\Tab.cs" />
+    <Compile Include="Models\Gui\Shared\TreeView.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Helpers\IncludeExtensions.cs" />
+    <Compile Include="Helpers\UrlBuilder.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\mono-build\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="favicon.ico">
+    </Content>
+    <Content Include="Default.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="Media\chart_line.png">
+    </Content>
+    <Content Include="Media\collapse.gif">
+    </Content>
+    <Content Include="Media\expand.gif">
+    </Content>
+    <Content Include="Media\menutrans.png">
+    </Content>
+    <Content Include="Media\treebg.png">
+    </Content>
+    <Content Include="Media\wrench.png">
+    </Content>
+    <Content Include="Scripts\TreeMenu.js">
+    </Content>
+    <Content Include="Views\Builds\Index.aspx" />
+    <Content Include="Views\Shared\SiteMenu.ascx" />
+    <Content Include="Web.config" />
+    <Content Include="Media\style.css" />
+    <Content Include="Scripts\jquery-1.3.2.js" />
+    <Content Include="Scripts\jquery-1.3.2.min.js" />
+    <Content Include="Scripts\jquery-1.3.2-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.3.2.min-vsdoc.js" />
+    <Content Include="Scripts\MicrosoftAjax.js" />
+    <Content Include="Scripts\MicrosoftAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
+    <Content Include="Views\Shared\Error.aspx" />
+    <Content Include="Views\Shared\Site.Master" />
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\BlueBox.ascx" />
+    <Content Include="Views\Shared\BreadCrumbBar.ascx" />
+    <Content Include="Views\Builds\Builds.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Media\StatusStrip\gr_g.png" />
+    <Content Include="Media\StatusStrip\gr_o.png" />
+    <Content Include="Media\StatusStrip\gr_r.png" />
+    <Content Include="Media\StatusStrip\gr_y.png" />
+    <Content Include="Media\StatusStrip\g_g.png" />
+    <Content Include="Media\StatusStrip\g_gr.png" />
+    <Content Include="Media\StatusStrip\g_o.png" />
+    <Content Include="Media\StatusStrip\g_r.png" />
+    <Content Include="Media\StatusStrip\g_y.png" />
+    <Content Include="Media\StatusStrip\gr_gr.png" />
+    <Content Include="Media\mono.png" />
+    <Content Include="Media\novell-logo.png" />
+    <Content Include="Media\StatusStrip\o_g.png" />
+    <Content Include="Media\StatusStrip\o_gr.png" />
+    <Content Include="Media\StatusStrip\o_o.png" />
+    <Content Include="Media\StatusStrip\o_r.png" />
+    <Content Include="Media\StatusStrip\o_y.png" />
+    <Content Include="Media\StatusStrip\r_g.png" />
+    <Content Include="Media\StatusStrip\r_gr.png" />
+    <Content Include="Media\StatusStrip\r_o.png" />
+    <Content Include="Media\StatusStrip\r_r.png" />
+    <Content Include="Media\StatusStrip\r_y.png" />
+    <Content Include="Media\StatusStrip\y_g.png" />
+    <Content Include="Media\StatusStrip\y_gr.png" />
+    <Content Include="Media\StatusStrip\y_o.png" />
+    <Content Include="Media\StatusStrip\y_r.png" />
+    <Content Include="Media\StatusStrip\y_y.png" />
+    <Content Include="Views\Status\Class.aspx" />
+    <Content Include="Views\Builds\StatusStrip.ascx" />
+    <Content Include="Views\Shared\TreeMenu.ascx" />
+    <None Include="Web References\mono-build\WebServices.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Content\classstatus.xml" />
+    <Content Include="Media\assembly.png" />
+    <Content Include="Media\BreadCrumb\bc_bg.png" />
+    <Content Include="Media\BreadCrumb\bc_separator.png" />
+    <Content Include="Media\bricks.png" />
+    <Content Include="Media\moon.png" />
+    <Content Include="Views\Status\Index.aspx" />
+    <Content Include="Views\Status\List.aspx" />
+    <Content Include="Views\Status\Status.Master" />
+    <None Include="Web References\mono-build\DBLaneDeletionDirectiveView.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\mono-build\DBState.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\mono-build\FindHostResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\mono-build\FindLaneResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\mono-build\FindRevisionResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\mono-build\FrontPageResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\mono-build\GetAdminInfoResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\mono-build\GetBuildInfoResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\mono-build\GetHostForEditResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\mono-build\GetHostsResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\mono-build\GetLaneFileForEditResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\mono-build\GetLaneForEditResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\mono-build\GetLaneResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\mono-build\GetLanesResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\mono-build\GetUsersResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\mono-build\GetViewLaneDataResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\mono-build\GetViewLaneFileHistoryDataResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\mono-build\GetViewTableDataResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\mono-build\GetViewWorkTableDataResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\mono-build\LoginResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\mono-build\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\mono-build\ReportBuildStateResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\mono-build\WebServices.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://build.mono-project.com/WebServices/WebServices.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\mono-build\</RelPath>
+      <UpdateFromURL>http://build.mono-project.com/WebServices/WebServices.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>MvcMonkey_mono_build_WebServices</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target> -->
+  <Target Name="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(ProjectDir)\..\$(ProjectName)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>61174</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

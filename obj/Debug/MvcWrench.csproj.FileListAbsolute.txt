@@ -1,0 +1,10 @@
+C:\Users\Jonathan\Documents\Visual Studio 2008\Projects\MvcWrench\MvcMonkey\bin\MvcMonkey.dll
+C:\Users\Jonathan\Documents\Visual Studio 2008\Projects\MvcWrench\MvcMonkey\bin\MvcMonkey.pdb
+C:\Users\Jonathan\Documents\Visual Studio 2008\Projects\MvcWrench\MvcMonkey\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Jonathan\Documents\Visual Studio 2008\Projects\MvcWrench\MvcMonkey\obj\Debug\MvcMonkey.dll
+C:\Users\Jonathan\Documents\Visual Studio 2008\Projects\MvcWrench\MvcMonkey\obj\Debug\MvcMonkey.pdb
+C:\Users\Jonathan\Documents\Visual Studio 2008\Projects\MvcWrench\bin\MvcMonkey.dll
+C:\Users\Jonathan\Documents\Visual Studio 2008\Projects\MvcWrench\bin\MvcMonkey.pdb
+C:\Users\Jonathan\Documents\Visual Studio 2008\Projects\MvcWrench\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Jonathan\Documents\Visual Studio 2008\Projects\MvcWrench\obj\Debug\MvcMonkey.dll
+C:\Users\Jonathan\Documents\Visual Studio 2008\Projects\MvcWrench\obj\Debug\MvcMonkey.pdb
