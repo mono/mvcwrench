@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using MvcWrench.Models;
 using MvcWrench.mono_build;
+using MvcWrench.MonkeyWrench.Public;
 
 namespace MvcWrench.Controllers
 {
@@ -77,6 +78,15 @@ namespace MvcWrench.Controllers
 			strips.Add (strip26);
 			strips.Add (strip24);
 
+			try {
+				MonkeyWrench.Public.Public ws2 = new MvcWrench.MonkeyWrench.Public.Public ();
+				var msvc = ws2.GetRecentData ("msvc");
+				
+				strip.Rows.Add (MonkeyWrenchHelper.GetRow (msvc));
+			} catch {
+				// Carry on even if this fails
+			}
+			
 			ViewData["PageTitle"] = "MonkeyWrench - Mono Build Overview";
 
 			return View ("Index", strips);
@@ -239,6 +249,50 @@ namespace MvcWrench.Controllers
 			return View ("Index", strips);
 		}
 
+		// GET: /Builds/msvc/{buildrevisionid}
+		public ActionResult BuildStatus (string buildrevisionid)
+		{
+			// Build the build step list model
+			BuildStepList list = new BuildStepList (); 
+			
+			MonkeyWrench.Public.Public ws2 = new MvcWrench.MonkeyWrench.Public.Public ();
+			var steps = ws2.GetCompletedSteps (long.Parse (buildrevisionid));
+
+			foreach (CompletedBuildStep step in steps) {
+				BuildStepListItem item = new BuildStepListItem (step.Id, TimeSpan.Zero, step.ExitCode, step.CompletionStatus, step.StepName);
+				item.LogUrl = string.Format ("~/builds/msvc/{0}/{1}", buildrevisionid, step.Id);
+
+				list.Items.Add (item);
+			}
+
+			//// Build the bread crumb bar model
+			//BreadCrumb bc = new BreadCrumb ();
+
+			//bc.Crumbs.Add (new Crumb ("Projects", UrlBuilder.Builds));
+			//bc.Crumbs.Add (new Crumb (p.Name, UrlBuilder.ProductBuild (p)));
+			//bc.Crumbs.Add (new Crumb (string.Format ("Revision {0}", pr.Revision), UrlBuilder.RevisionDetails (pr)));
+			//bc.Crumbs.Add (new Crumb (plat.Name));
+
+			//ViewData["Platform"] = platform;
+			//ViewData["BreadCrumb"] = bc;
+			ViewData["BuildStepList"] = list;
+			//ViewData["Installer"] = installer;
+			ViewData["PageTitle"] = "MonkeyWrench - Msvc Build Overview";
+
+			return View ("BuildStatus");
+		}
+		
+		// GET: /Builds/{product}/{revision}/{platform}/log/{id}
+		public ActionResult BuildStatusLog (string buildrevisionid, string completedstepid)
+		{
+			MonkeyWrench.Public.Public ws2 = new MvcWrench.MonkeyWrench.Public.Public ();
+			string log = ws2.GetBuildLog (int.Parse (completedstepid));
+
+			ViewData["PageTitle"] = "MonkeyWrench - View Log";
+			ViewData["Log"] = log;
+			return View ("BuildStatusLog");//, log);
+		}
+		
 		#region Global Data
 		protected override void OnActionExecuted (ActionExecutedContext filterContext)
 		{

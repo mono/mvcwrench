@@ -29,6 +29,7 @@ using System.Linq;
 using System.Web;
 using MvcWrench.Models;
 using MvcWrench.mono_build;
+using MvcWrench.MonkeyWrench.Public;
 
 namespace MvcWrench
 {
@@ -94,13 +95,31 @@ namespace MvcWrench
 			return row;
 		}
 		
+		public static StatusStripRow GetRow (BuildRevision[] revs)
+		{
+			StatusStripRow row = new StatusStripRow ();
+			row.HeaderText = "msvc: windows";
+
+			foreach (var item in revs) {
+				StatusStripCell cell = new StatusStripCell ();
+				cell.Text = string.Format ("r{0}", item.RevisionNumber);
+				cell.Status = item.Status;
+
+				cell.Url = string.Format ("~/builds/msvc/{0}", item.Id);
+
+				row.Cells.Add (cell);
+			}
+			
+			return row;
+		}
+		
 		private static int ConvertState (int state)
 		{
 			// 0 not done, 1 executing, 2 failed, 3 success, 4 aborted, 5 timeout, 6 testfail
 			switch (state) {
-				case 0:	return 0;
+				case 0:	case 9: return 0;
 				case 1: return 1;
-				case 2: case 9: return 2;
+				case 2: return 2;
 				case 3: return 3;
 				case 8:	return 6;
 				

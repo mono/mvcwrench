@@ -356,4 +356,38 @@ li.o_r      { background-image: url(StatusStrip/o_r.png); }
 li.o_y      { background-image: url(StatusStrip/o_y.png); }
 li.o_o      { background-image: url(StatusStrip/o_o.png); }
 
+/* Step list */
+.steplist
+{
+	border-collapse: collapse;
+	font-size: 12px;
+	text-align: left;
+	width: 700px;
+}
 
+.steplist th
+{
+	background: #b9c9fe;
+	border-bottom: 1px solid #fff;
+	border-top: 4px solid #aabcfe;
+	color: #039;
+	font-size: 13px;
+	font-weight: 400;
+	padding: 8px;
+	background: #b9c9fe;
+	border-top: 4px solid #67a7e3;
+}
+
+.steplist tr
+{
+	background: #e5ecf3;
+}
+
+.steplist td
+{
+	border-bottom: 1px solid #fff;
+	border-top: 1px solid transparent;
+	font-size: 12px;
+	color: #669;
+	padding: 5px;
+}

@@ -45,6 +45,8 @@ namespace MvcWrench
 			routes.MapRoute ("BuildsMonoExtended", "builds/monoextended", new { controller = "Builds", action = "MonoExtended", id = "" });
 			routes.MapRoute ("BuildsOther", "builds/other", new { controller = "Builds", action = "Other", id = "" });
 			routes.MapRoute ("BuildsMono", "builds/mono", new { controller = "Builds", action = "Index", id = "" });
+			routes.MapRoute ("BuildsMsvc", "builds/msvc/{buildrevisionid}", new { controller = "Builds", action = "BuildStatus", id = "" });
+			routes.MapRoute ("BuildsMsvcLog", "builds/msvc/{buildrevisionid}/{completedstepid}", new { controller = "Builds", action = "BuildStatusLog", id = "" });
 			routes.MapRoute ("BuildsOverview", "builds", new { controller = "Builds", action = "Index", id = "" });
 
 			// Status

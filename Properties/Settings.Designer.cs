@@ -32,5 +32,25 @@ namespace MvcWrench.Properties {
                 return ((string)(this["MvcWrench_mono_build_WebServices"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://build.mono-project.com/WebServices/WebServices.asmx")]
+        public string MvcMonkey_mono_build_WebServices {
+            get {
+                return ((string)(this["MvcMonkey_mono_build_WebServices"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://68.52.167.37/MonkeyWrench.Public/Public.asmx")]
+        public string MvcWrench_MonkeyWrench_Public_Public {
+            get {
+                return ((string)(this["MvcWrench_MonkeyWrench_Public_Public"]));
+            }
+        }
     }
 }

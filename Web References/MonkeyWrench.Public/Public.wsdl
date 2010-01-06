@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetRecentData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="product" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetRecentDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetRecentDataResult" type="tns:ArrayOfBuildRevision" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfBuildRevision">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="BuildRevision" nillable="true" type="tns:BuildRevision" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="BuildRevision">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="ProductRevisionID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="PlatformID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="PlatformName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="BuilderID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Status" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="RevisionNumber" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetCompletedSteps">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="buildRevisionID" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCompletedStepsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCompletedStepsResult" type="tns:ArrayOfCompletedBuildStep" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfCompletedBuildStep">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CompletedBuildStep" nillable="true" type="tns:CompletedBuildStep" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CompletedBuildStep">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="BuildRevisionId" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="BuildStepId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ElapsedTime" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="ExitCode" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CompletionStatus" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Log" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StepName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PublishFile" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetBuildLog">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="completedStepID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBuildLogResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetBuildLogResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetRecentDataSoapIn">
+    <wsdl:part name="parameters" element="tns:GetRecentData" />
+  </wsdl:message>
+  <wsdl:message name="GetRecentDataSoapOut">
+    <wsdl:part name="parameters" element="tns:GetRecentDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCompletedStepsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCompletedSteps" />
+  </wsdl:message>
+  <wsdl:message name="GetCompletedStepsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCompletedStepsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetBuildLogSoapIn">
+    <wsdl:part name="parameters" element="tns:GetBuildLog" />
+  </wsdl:message>
+  <wsdl:message name="GetBuildLogSoapOut">
+    <wsdl:part name="parameters" element="tns:GetBuildLogResponse" />
+  </wsdl:message>
+  <wsdl:portType name="PublicSoap">
+    <wsdl:operation name="GetRecentData">
+      <wsdl:input message="tns:GetRecentDataSoapIn" />
+      <wsdl:output message="tns:GetRecentDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCompletedSteps">
+      <wsdl:input message="tns:GetCompletedStepsSoapIn" />
+      <wsdl:output message="tns:GetCompletedStepsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBuildLog">
+      <wsdl:input message="tns:GetBuildLogSoapIn" />
+      <wsdl:output message="tns:GetBuildLogSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PublicSoap" type="tns:PublicSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetRecentData">
+      <soap:operation soapAction="http://tempuri.org/GetRecentData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCompletedSteps">
+      <soap:operation soapAction="http://tempuri.org/GetCompletedSteps" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBuildLog">
+      <soap:operation soapAction="http://tempuri.org/GetBuildLog" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PublicSoap12" type="tns:PublicSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetRecentData">
+      <soap12:operation soapAction="http://tempuri.org/GetRecentData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCompletedSteps">
+      <soap12:operation soapAction="http://tempuri.org/GetCompletedSteps" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBuildLog">
+      <soap12:operation soapAction="http://tempuri.org/GetBuildLog" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Public">
+    <wsdl:port name="PublicSoap" binding="tns:PublicSoap">
+      <soap:address location="http://68.52.167.37/MonkeyWrench.Public/Public.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PublicSoap12" binding="tns:PublicSoap12">
+      <soap12:address location="http://68.52.167.37/MonkeyWrench.Public/Public.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

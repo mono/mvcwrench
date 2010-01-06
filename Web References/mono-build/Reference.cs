@@ -181,7 +181,7 @@ namespace MvcWrench.mono_build {
         
         /// <remarks/>
         public WebServices() {
-		this.Url = global::MvcWrench.Properties.Settings.Default.MvcWrench_mono_build_WebServices;
+            this.Url = global::MvcWrench.Properties.Settings.Default.MvcMonkey_mono_build_WebServices;
             if ((this.IsLocalFileSystemWebService(this.Url) == true)) {
                 this.UseDefaultCredentials = true;
                 this.useDefaultCredentialsSetExplicitly = false;
@@ -3006,11 +3006,7 @@ namespace MvcWrench.mono_build {
         private string max_revisionField;
         
         private System.Nullable<int> parent_lane_idField;
-
-	public override string ToString ()
-	{
-		return string.Format ("Lane {0} - {1}", id, lane);
-	}
+        
         /// <remarks/>
         public string lane {
             get {
@@ -3385,11 +3381,7 @@ namespace MvcWrench.mono_build {
         private int lane_idField;
         
         private bool enabledField;
-
-	public override string ToString ()
-	{
-		return string.Format ("HostLane {2} : Host {0} - Lane {1}", host_id, lane_id, id);
-	} 
+        
         /// <remarks/>
         public int host_id {
             get {
@@ -4147,11 +4139,7 @@ namespace MvcWrench.mono_build {
         private int queuemanagementField;
         
         private bool enabledField;
-
-	public override string ToString ()
-	{
-		return string.Format ("Host {0} - {1}", id, host);
-	}
+        
         /// <remarks/>
         public string host {
             get {

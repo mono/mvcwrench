@@ -5,5 +5,11 @@
     <Setting Name="MvcWrench_mono_build_WebServices" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">http://build.mono-project.com/WebServices/WebServices.asmx</Value>
     </Setting>
+    <Setting Name="MvcMonkey_mono_build_WebServices" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://build.mono-project.com/WebServices/WebServices.asmx</Value>
+    </Setting>
+    <Setting Name="MvcWrench_MonkeyWrench_Public_Public" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://68.52.167.37/MonkeyWrench.Public/Public.asmx</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
