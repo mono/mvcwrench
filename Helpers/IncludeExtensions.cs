@@ -76,4 +76,47 @@ public static class IncludeExtensions
 		else
 			return html.GetImage (falseImage);
 	}
+
+	public static string ToFriendlyAge (this DateTime dt)
+	{
+		TimeSpan diff = DateTime.Now - dt;
+
+		if (diff.TotalDays >= 365)
+			return string.Format ("{0} years", diff.Days / 365);
+		if (diff.TotalDays >= 60)
+			return string.Format ("{0} months", diff.Days / 30);
+		if (diff.TotalDays >= 14)
+			return string.Format ("{0} weeks", diff.Days / 7);
+		if (diff.TotalDays >= 2)
+			return string.Format ("{0} days", diff.Days);
+		if (diff.TotalHours >= 1)
+			return string.Format ("{0} hours", (int)diff.TotalHours);
+		if (diff.TotalMinutes >= 1)
+			return string.Format ("{0} minutes", (int)diff.TotalMinutes);
+
+		return string.Format ("{0} seconds", diff.Seconds);
+	}
+
+	public static string ToFriendlySpan (this TimeSpan diff)
+	{
+		if (diff.TotalDays >= 365)
+			return string.Format ("{0} years", diff.Days / 365);
+		if (diff.TotalDays >= 60)
+			return string.Format ("{0} months", diff.Days / 30);
+		if (diff.TotalDays >= 14)
+			return string.Format ("{0} weeks", diff.Days / 7);
+		if (diff.TotalDays >= 2)
+			return string.Format ("{0} days", diff.Days);
+		if (diff.TotalHours >= 1)
+			return string.Format ("{0} hours", (int)diff.TotalHours);
+		if (diff.TotalMinutes >= 1)
+			return string.Format ("{0} minutes", (int)diff.TotalMinutes);
+
+		return string.Format ("{0} seconds", diff.Seconds);
+	}
+
+	public static string ToHoursMinSec (this TimeSpan diff)
+	{
+		return string.Format ("{0:00}:{1:00}:{2:00}", diff.Hours, diff.Minutes, diff.Seconds);
+	}
 }

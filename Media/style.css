@@ -23,6 +23,11 @@ a
     text-decoration: none;
 }
 
+pre
+{
+    font-size: 10pt;
+}
+
 /* Header/Menu */
 #header
 {
@@ -324,6 +329,7 @@ a
 .statusstrip li.testfail    { background-color: #FFCC66; }
 .statusstrip li.executing   { background-color: #FFF095; }
 .statusstrip li.success     { background-color: #A5E368; }
+.statusstrip li.cell-header     { background-color: #FFFFFF; }
 
 /* Transition States */
 li.g_gr     { background-image: url(StatusStrip/g_gr.png); }
@@ -355,6 +361,8 @@ li.o_gr     { background-image: url(StatusStrip/o_gr.png); }
 li.o_r      { background-image: url(StatusStrip/o_r.png); }
 li.o_y      { background-image: url(StatusStrip/o_y.png); }
 li.o_o      { background-image: url(StatusStrip/o_o.png); }
+
+li.row-header { background-image: none; background-color: #FFFFFF; font-weight: bold; }
 
 /* Step list */
 .steplist
@@ -391,3 +399,156 @@ li.o_o      { background-image: url(StatusStrip/o_o.png); }
 	color: #669;
 	padding: 5px;
 }
+
+/* Commit Header */
+#commit
+{
+    overflow: hidden;
+    border: 1px solid #8EAACE;
+    padding: 0 .7em .7em .7em;
+    background-color: #E9F2FF;
+    margin: 10px 0 15px;
+	-moz-border-radius: 3px;
+}
+
+#commit .human
+{
+    padding-top: .7em;
+    float: left;
+    width: 40em;
+}
+
+#commit .human .actor
+{
+    clear: left;
+    margin-bottom: 2px;
+}
+
+#commit .human .actor .gravatar
+{
+    height: 30px;
+    width: 30px;
+    border: 1px solid #d0d0d0;
+    padding: 2px;
+    background-color: white;
+    float: left;
+    margin-right: .5em;
+	-moz-border-radius: 3px;
+}
+
+#commit .human .actor .name
+{
+    line-height: 1.5em;
+}
+
+#commit .human .actor .date
+{
+    color: #888;
+    font-size: 90%;
+    line-height: 1em;
+}
+
+#commit .machine
+{
+    float: right;
+    width: 20em;
+    padding: .7em 0 .7em .7em;
+    border-left: 1px solid #8EAACE;
+    color: #808080;
+    font-family: Monaco,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace;
+    font-size: .85em;
+    line-height: 1.5em;
+}
+
+/* Step table */
+#build-steps
+{
+	border-top: solid 1px #cccccc;
+	border-right: solid 1px #cccccc;
+	border-bottom: solid 1px #cccccc;
+	border-collapse: collapse;
+	padding: 0px;
+	width: 100%;
+	color: #696969;
+    font-family: Verdana,Helvetica,Sans-Serif;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+#build-steps td
+{
+	padding: 4px;
+}
+
+#header td
+{
+	padding: 0px 4px 0px 4px;
+	font-size: 1.4em;
+	vertical-align: middle;
+	line-height: 1.4em;
+}
+
+#build-steps th
+{
+	padding: 6px 5px;
+	text-align: left;
+	background-color: #EAEAEA;
+	color: #000000;
+	border-bottom: solid 1px #cccccc;
+	border-left: solid 1px #cccccc;
+}
+
+#build-steps tr.odd
+{
+	background-color: #FBFBFB;
+}
+
+#build-steps .pre-space
+{
+    white-space: pre;
+    font-family: monospace;
+	font-size: 1.2em;
+}
+
+#build-steps td.status-column
+{
+    padding: 5px 0px 5px 5px;
+    width: 2px;
+    background-color: #ebebeb;
+	border-left: solid 1px #ebebeb;
+}
+
+#build-steps .icon-column
+{
+    padding: 5px 0px 5px 5px;
+    width: 18px;
+}
+
+#build-steps .wide
+{
+    width: 150px;
+}
+
+#build-steps .center-text
+{
+    text-align: center;
+}
+
+#build-steps .vertical-top
+{
+    vertical-align: top;
+}
+
+#build-steps img
+{
+	border: 0;	
+}
+
+#build-steps td.fail        { background-color: #F36868; border-left-color: #F36868; }
+#build-steps td.testfail    { background-color: #FFCC66; border-left-color: #FFCC66; }
+#build-steps td.executing   { background-color: #FFF095; border-left-color: #FFF095; }
+#build-steps td.success     { background-color: #A5E368; border-left-color: #A5E368; }
+
+#build-steps tr.fail        { background-color: #FFDDDD; }
+#build-steps tr.testfail    { background-color: #FFCC66; }
+#build-steps tr.executing   { background-color: #FFF095; }

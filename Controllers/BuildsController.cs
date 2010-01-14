@@ -29,6 +29,9 @@ using System.Web.Mvc;
 using MvcWrench.Models;
 using MvcWrench.mono_build;
 using MvcWrench.MonkeyWrench.Public;
+using System.Net;
+using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace MvcWrench.Controllers
 {
@@ -37,6 +40,8 @@ namespace MvcWrench.Controllers
 		// GET: /Builds/Official
 		public ActionResult Index ()
 		{
+			string new_rev_link = "builds/{0}/{1}/{2}";
+
 			WebServices ws = new WebServices ();
 			WebServiceLogin login = new WebServiceLogin ();
 
@@ -78,11 +83,39 @@ namespace MvcWrench.Controllers
 			strips.Add (strip26);
 			strips.Add (strip24);
 
+			foreach (var row in strip.Rows) {
+				foreach (var cell in row.Cells) {
+					if (cell.IsHeader || cell.Text == "msvc: windows")
+						continue;
+						
+					cell.Url = string.Format (new_rev_link, "mono", row.HeaderText.Replace (": ", "-"), cell.Text.TrimStart ('r'));
+				}
+			}
+
+			foreach (var row in strip26.Rows) {
+				foreach (var cell in row.Cells) {
+					if (cell.IsHeader)
+						continue;
+
+					cell.Url = string.Format (new_rev_link, "mono26", row.HeaderText.Replace (": ", "-"), cell.Text.TrimStart ('r'));
+				}
+			}
+
+			foreach (var row in strip24.Rows) {
+				foreach (var cell in row.Cells) {
+					if (cell.IsHeader)
+						continue;
+
+					cell.Url = string.Format (new_rev_link, "mono24", row.HeaderText.Replace (": ", "-"), cell.Text.TrimStart ('r'));
+				}
+			}
+
 			try {
 				MonkeyWrench.Public.Public ws2 = new MvcWrench.MonkeyWrench.Public.Public ();
 				var msvc = ws2.GetRecentData ("msvc");
 				
 				strip.Rows.Add (MonkeyWrenchHelper.GetRow (msvc));
+				//strip.Rows.Insert (0, MonkeyWrenchHelper.GetHeaderRow (msvc));
 			} catch {
 				// Carry on even if this fails
 			}
@@ -291,6 +324,178 @@ namespace MvcWrench.Controllers
 			ViewData["PageTitle"] = "MonkeyWrench - View Log";
 			ViewData["Log"] = log;
 			return View ("BuildStatusLog");//, log);
+		}
+		
+		public ActionResult RevisionDetails (string project, string platform, string revision)
+		{
+			int lane_id;
+			int host_id;
+			int revision_id;
+			
+			if (!FindHostAndLane (project, platform, out host_id, out lane_id))
+				return View ("Error");
+				
+			WebServices ws = new WebServices ();
+			WebServiceLogin login = new WebServiceLogin ();
+
+			var rev = ws.FindRevisionForLane (login, null, revision, lane_id, null);
+			revision_id = rev.Revision.id;
+			
+			GetViewLaneDataResponse data = ws.GetViewLaneData (login, lane_id, null, host_id, null, revision_id, null);
+
+			Commit commit = new Commit ();
+			
+			commit.CompletionStatus = data.RevisionWork.state;
+			commit.Revision = data.Revision.revision;
+			commit.Author = data.Revision.author;
+			commit.CommitTime = data.Revision.date;
+			commit.Lane = data.Lane.lane;
+			commit.Host = data.Host.host;
+			commit.Builder = data.WorkHost == null ? "" : data.WorkHost.host;
+			commit.BuildDuration = TimeSpan.Zero;
+			commit.CommitLog = "";
+			commit.Email = UserHelpers.SvnUserToEmail (SvnGravatars.GetInstance (Server.MapPath ("~/Content/gravatars.txt")).Get (commit.Author));
+			
+			// Download the commit log to add
+			string url = string.Format ("http://build.mono-project.com/GetRevisionLog.aspx?id={0}", data.Revision.id);
+
+			WebClient wc = new WebClient ();
+			string content = wc.DownloadString (url);
+			
+			Regex reg = new Regex (@"\<pre\ id\=\""ctl00_content_log\""\>(?<data>(?:.|\n)*?)\<\/pre\>", RegexOptions.Multiline);
+			Match m = reg.Match (content);
+			commit.CommitLog = m.Groups["data"].Value.Trim ();
+
+			// Build the list of steps
+			BuildStepList bsl = new BuildStepList ();
+
+			string history_url = @"http://build.mono-project.com/ViewWorkTable.aspx?lane_id={0}&host_id={1}&command_id={2}";
+			string log_url = @"http://build.mono-project.com/GetFile.aspx?id={0}";
+			
+			DateTime start_time = DateTime.MinValue;
+			
+			for (int j = 0; j < data.WorkViews.Length; j++) {
+				var item = data.WorkViews[j];
+				var log = data.WorkFileViews[j];
+				
+				if (j == 0)
+					start_time = item.starttime;
+					
+				BuildStepListItem i = new BuildStepListItem ();
+				
+				i.BuildStepID = item.id;
+				i.ElapsedTime = item.endtime.Subtract (item.starttime);
+				i.HistoryUrl = string.Format (history_url, lane_id, host_id, item.command_id);
+				i.Name = item.command;
+				i.Results = item.summary;
+				i.CompletionStatus = item.state;
+				
+				if (log != null && log.Length > 0)
+					i.LogUrl = string.Format (log_url, log[0].id);
+					
+				bsl.Items.Add (i);
+			}
+			
+			if (data.RevisionWork.completed)
+				commit.BuildDuration = data.RevisionWork.endtime.Subtract (start_time);
+			
+			//ws.getre
+			ViewData["commit"] = commit;
+			ViewData["steps"] = bsl;
+			ViewData["PageTitle"] = string.Format ("MonkeyWrench - Revision {0} - Host {1}", commit.Revision, commit.Host);
+			
+			return View ("RevisionDetails");
+		}
+		
+		private bool FindHostAndLane (string project, string platform, out int host, out int lane)
+		{
+			host = -1;
+			lane = -1;
+
+			switch (string.Format ("{0}|{1}", project, platform).ToLowerInvariant ()) {
+				case "mono|sle-11-i586":
+					lane = 17;
+					host = 23;
+					return true;
+				case "mono|dist":
+					lane = 2;
+					host = 2;
+					return true;
+				case "mono|sle-11-x86_64":
+					lane = 40;
+					host = 3;
+					return true;
+				case "mono|windows-5.1-i586":
+					lane = 40;
+					host = 8;
+					return true;
+				case "mono|macos-10.4-i386":
+					lane = 40;
+					host = 51;
+					return true;
+				case "mono|macos-10.4-ppc":
+					lane = 40;
+					host = 5;
+					return true;
+				case "mono|eglib-sle-11-i586":
+					lane = 12;
+					host = 23;
+					return true;
+				case "mono|eglib-sle-11-x64":
+					lane = 12;
+					host = 3;
+					return true;
+				case "mono26|dist":
+					lane = 41;
+					host = 2;
+					return true;
+				case "mono26|sle-11-i586":
+					lane = 62;
+					host = 23;
+					return true;
+				case "mono26|sle-11-x86_64":
+					lane = 62;
+					host = 3;
+					return true;
+				case "mono26|windows-5.1-i586":
+					lane = 62;
+					host = 8;
+					return true;
+				case "mono26|macos-10.4-i386":
+					lane = 62;
+					host = 51;
+					return true;
+				case "mono26|macos-10.4-ppc":
+					lane = 62;
+					host = 2;
+					return true;
+				case "mono24|dist":
+					lane = 60;
+					host = 2;
+					return true;
+				case "mono24|sle-11-i586":
+					lane = 60;
+					host = 23;
+					return true;
+				case "mono24|sle-11-x86_64":
+					lane = 60;
+					host = 3;
+					return true;
+				case "mono24|windows-5.1-i586":
+					lane = 60;
+					host = 8;
+					return true;
+				case "mono24|macos-10.4-i386":
+					lane = 60;
+					host = 51;
+					return true;
+				case "mono24|macos-10.4-ppc":
+					lane = 60;
+					host = 2;
+					return true;
+			}
+			
+			return false;
 		}
 		
 		#region Global Data

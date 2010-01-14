@@ -210,6 +210,8 @@ namespace MvcWrench.MonkeyWrench.Public {
         
         private string revisionNumberField;
         
+        private string authorField;
+        
         /// <remarks/>
         public long Id {
             get {
@@ -277,6 +279,16 @@ namespace MvcWrench.MonkeyWrench.Public {
             }
             set {
                 this.revisionNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Author {
+            get {
+                return this.authorField;
+            }
+            set {
+                this.authorField = value;
             }
         }
     }

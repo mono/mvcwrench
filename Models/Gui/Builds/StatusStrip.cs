@@ -43,7 +43,8 @@ namespace MvcWrench.Models
 	{
 		public string HeaderText { get; set; }
 		public string HeaderUrl { get; set; }
-
+		public bool IsHeader { get; set; }
+		
 		public List<StatusStripCell> Cells { get; private set; }
 
 		public StatusStripRow ()
@@ -57,9 +58,15 @@ namespace MvcWrench.Models
 		public string Text { get; set; }
 		public int Status { get; set; }
 		public string Url { get; set; }
+		public bool IsHeader { get; set; }
 		
 		public string GetCss (StatusStripCell next)
 		{
+			if (IsHeader && next == null)
+				return "cell-header stripend";
+			else if (IsHeader)
+				return "cell-header";
+				
 			string css1 = StatusToCss (Status);
 			string css2 = string.Empty;
 			

@@ -97,6 +97,8 @@ namespace MvcWrench.mono_build {
         
         private System.Threading.SendOrPostCallback FindHostOperationCompleted;
         
+        private System.Threading.SendOrPostCallback FindRevisionForLaneOperationCompleted;
+        
         private System.Threading.SendOrPostCallback FindRevisionOperationCompleted;
         
         private System.Threading.SendOrPostCallback FindLaneOperationCompleted;
@@ -313,6 +315,9 @@ namespace MvcWrench.mono_build {
         
         /// <remarks/>
         public event FindHostCompletedEventHandler FindHostCompleted;
+        
+        /// <remarks/>
+        public event FindRevisionForLaneCompletedEventHandler FindRevisionForLaneCompleted;
         
         /// <remarks/>
         public event FindRevisionCompletedEventHandler FindRevisionCompleted;
@@ -1492,6 +1497,43 @@ namespace MvcWrench.mono_build {
             if ((this.FindHostCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.FindHostCompleted(this, new FindHostCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://monkeywrench.novell.com/FindRevisionForLane", RequestNamespace="http://monkeywrench.novell.com/", ResponseNamespace="http://monkeywrench.novell.com/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public FindRevisionResponse FindRevisionForLane(WebServiceLogin login, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] System.Nullable<int> revision_id, string revision, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] System.Nullable<int> lane_id, string lane) {
+            object[] results = this.Invoke("FindRevisionForLane", new object[] {
+                        login,
+                        revision_id,
+                        revision,
+                        lane_id,
+                        lane});
+            return ((FindRevisionResponse)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void FindRevisionForLaneAsync(WebServiceLogin login, System.Nullable<int> revision_id, string revision, System.Nullable<int> lane_id, string lane) {
+            this.FindRevisionForLaneAsync(login, revision_id, revision, lane_id, lane, null);
+        }
+        
+        /// <remarks/>
+        public void FindRevisionForLaneAsync(WebServiceLogin login, System.Nullable<int> revision_id, string revision, System.Nullable<int> lane_id, string lane, object userState) {
+            if ((this.FindRevisionForLaneOperationCompleted == null)) {
+                this.FindRevisionForLaneOperationCompleted = new System.Threading.SendOrPostCallback(this.OnFindRevisionForLaneOperationCompleted);
+            }
+            this.InvokeAsync("FindRevisionForLane", new object[] {
+                        login,
+                        revision_id,
+                        revision,
+                        lane_id,
+                        lane}, this.FindRevisionForLaneOperationCompleted, userState);
+        }
+        
+        private void OnFindRevisionForLaneOperationCompleted(object arg) {
+            if ((this.FindRevisionForLaneCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.FindRevisionForLaneCompleted(this, new FindRevisionForLaneCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -6495,6 +6537,32 @@ namespace MvcWrench.mono_build {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((FindHostResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.4927")]
+    public delegate void FindRevisionForLaneCompletedEventHandler(object sender, FindRevisionForLaneCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.4927")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class FindRevisionForLaneCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal FindRevisionForLaneCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public FindRevisionResponse Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((FindRevisionResponse)(this.results[0]));
             }
         }
     }
