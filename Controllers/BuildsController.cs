@@ -40,7 +40,7 @@ namespace MvcWrench.Controllers
 		// GET: /Builds/Official
 		public ActionResult Index ()
 		{
-			string new_rev_link = "builds/{0}/{1}/{2}";
+			string new_rev_link = "~/builds/{0}/{1}/{2}";
 
 			WebServices ws = new WebServices ();
 			WebServiceLogin login = new WebServiceLogin ();
@@ -354,7 +354,7 @@ namespace MvcWrench.Controllers
 			commit.Builder = data.WorkHost == null ? "" : data.WorkHost.host;
 			commit.BuildDuration = TimeSpan.Zero;
 			commit.CommitLog = "";
-			commit.Email = UserHelpers.SvnUserToEmail (SvnGravatars.GetInstance (Server.MapPath ("~/Content/gravatars.txt")).Get (commit.Author));
+			commit.Email = SvnGravatars.GetInstance (Server.MapPath ("~/Content/gravatars.txt")).Get (commit.Author);
 			
 			// Download the commit log to add
 			string url = string.Format ("http://build.mono-project.com/GetRevisionLog.aspx?id={0}", data.Revision.id);
@@ -467,10 +467,10 @@ namespace MvcWrench.Controllers
 					return true;
 				case "mono26|macos-10.4-ppc":
 					lane = 62;
-					host = 2;
+					host = 5;
 					return true;
 				case "mono24|dist":
-					lane = 60;
+					lane = 61;
 					host = 2;
 					return true;
 				case "mono24|sle-11-i586":
@@ -491,7 +491,7 @@ namespace MvcWrench.Controllers
 					return true;
 				case "mono24|macos-10.4-ppc":
 					lane = 60;
-					host = 2;
+					host = 5;
 					return true;
 			}
 			

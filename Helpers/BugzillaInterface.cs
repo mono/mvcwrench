@@ -30,26 +30,107 @@ using System.Web;
 using System.ServiceModel.Syndication;
 using System.Xml;
 
-namespace MvcWrench.Helpers
+namespace MvcWrench
 {
 	public static class BugzillaInterface
 	{
-		private static ExpiringCache cache = new ExpiringCache (10 * 60);
-		
-		private static List<SyndicationItem> GetLatestBugs ()
+		private static ExpiringCache cache = new ExpiringCache ();
+
+		public static List<BugzillaEntry> GetLatestBugs ()
 		{
-			int count = 15;
+			List<BugzillaEntry> bugs = (List<BugzillaEntry>)cache.Get ("bugs");
+
+			if (bugs == null) {
+				int count = 10;
+
+				string url = @"https://bugzilla.novell.com/buglist.cgi?chfield=[Bug%20creation]&chfieldfrom=7d&chfieldto=Now&classification=Mono&product=Mono%20Tasks&product=Mono%3A%20Class%20Libraries%20&product=Mono%3A%20Compilers&product=Mono%3A%20Debugger&product=Mono%3A%20Doctools&product=Mono%3A%20Runtime&product=Mono%3A%20Tools&query_format=advanced&ctype=rss";
+
+				SyndicationFeed feed = null;
+
+				using (XmlTextReader r = new XmlTextReader (url))
+					feed = SyndicationFeed.Load (r);
+
+				IEnumerable<SyndicationItem> items = feed.Items.OrderByDescending (p => p.Id).Take (count);
+
+				bugs = new List<BugzillaEntry> ();
+
+				foreach (var item in items)
+					bugs.Add (new BugzillaEntry (item));
+					
+				cache.Add ("bugs", bugs, 10 * 60);
+			}
 			
-			string url = @"https://bugzilla.novell.com/buglist.cgi?chfield=[Bug%20creation]&chfieldfrom=7d&chfieldto=Now&classification=Mono&product=Mono%20Tasks&product=Mono%3A%20Class%20Libraries%20&product=Mono%3A%20Compilers&product=Mono%3A%20Debugger&product=Mono%3A%20Doctools&product=Mono%3A%20Runtime&product=Mono%3A%20Tools&query_format=advanced&ctype=rss";
-
-			SyndicationFeed feed = null;
-
-			using (XmlTextReader r = new XmlTextReader (url))
-				feed = SyndicationFeed.Load (r);
-
-			IEnumerable<SyndicationItem> items = feed.Items.OrderByDescending (p => p.Id).Take (count);
-
-			return items.ToList ();
+			return bugs;
 		}
+	}
+
+	public class BugzillaEntry
+	{
+		public string Number { get; set; }
+		public string Url { get; set; }
+		public string Title { get; set; }
+		public DateTimeOffset Date { get; set; }
+		public string Product { get; set; }
+		public string Component { get; set; }
+		public string Reporter { get; set; }
+		public string AssignedTo { get; set; }
+		public BugzillaStatus Status { get; set; }
+
+		public BugzillaEntry ()
+		{
+		}
+
+		public BugzillaEntry (SyndicationItem entry)
+		{
+			Url = entry.Id;
+			Title = entry.Title.Text;
+			Number = Url.Substring (Url.Length - 6);
+			Date = entry.LastUpdatedTime;
+
+			XmlDocument doc = new XmlDocument ();
+			doc.LoadXml (entry.Summary.Text);
+
+			Product = GetData (doc, "bz_feed_product");
+			Component = GetData (doc, "bz_feed_component");
+			Reporter = GetData (doc, "bz_feed_reporter");
+			AssignedTo = GetData (doc, "bz_feed_assignee");
+
+			string status = GetData (doc, "bz_feed_bug_status");
+
+			switch (status.ToLowerInvariant ()) {
+				case "new":
+				case "assigned":
+					Status = BugzillaStatus.New;
+					break;
+				case "reopened":
+					Status = BugzillaStatus.Reopened;
+					break;
+				case "resolved":
+					Status = BugzillaStatus.Resolved;
+					break;
+			}
+		}
+
+		private string GetData (XmlDocument doc, string type)
+		{
+			XmlElement xe = (XmlElement)doc.SelectSingleNode (string.Format ("//table/tr[@class = \"{0}\"]", type));
+
+			if (xe == null)
+				return string.Empty;
+
+			XmlElement child = (XmlElement)xe.LastChild;
+
+			if (child == null)
+				return string.Empty;
+
+			return child.InnerText;
+		}
+	}
+
+	public enum BugzillaStatus
+	{
+		New,
+		Reopened,
+		Resolved
 	}
 }

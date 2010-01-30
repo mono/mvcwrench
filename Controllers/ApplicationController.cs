@@ -39,6 +39,7 @@ namespace MvcWrench.Controllers
 		{
 			List<Tab> tabs = new List<Tab> ();
 
+			tabs.Add (new Tab ("Home", "~/", "~/Media/house.png", 1));
 			tabs.Add (new Tab ("Builds", "~/builds", "~/Media/bricks.png", 1));
 			tabs.Add (new Tab ("Class Status", "~/status", "~/Media/chart_line.png", 1));
 

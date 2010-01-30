@@ -26,7 +26,7 @@ This is what we are building...
 
 <% foreach (MvcWrench.Models.StatusStripRow row in Model.Rows) { %><ul class="statusstrip">
 <% if (string.IsNullOrEmpty (row.HeaderUrl)) { %>
-  <li class="title <%= string.Format ("gr_{0}", MvcWrench.Models.StatusStripCell.GetStatusColor (row.Cells[0].Status)) %>" style="width: 115px"><%= row.HeaderText %></li>
+  <li class="title <%= string.Format ("gr_{0}", MvcWrench.Models.StatusStripCell.GetStatusColor (row.Cells[0].Status)) %> <%= row.IsHeader ? "row-header" : "" %>" style="width: 115px"><%= row.HeaderText %></li>
 <% } else { %>
   <li class="title <%= string.Format ("gr_{0}", MvcWrench.Models.StatusStripCell.GetStatusColor (row.Cells[0].Status)) %>" style="width: 115px"><a href="<%= Html.ResolveUrl (row.HeaderUrl) %>"><%= row.HeaderText %></a></li>
 <% } %>

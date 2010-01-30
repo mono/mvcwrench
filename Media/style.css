@@ -418,6 +418,14 @@ li.row-header { background-image: none; background-color: #FFFFFF; font-weight: 
     width: 40em;
 }
 
+#commit .human .revision
+{
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    float: right;
+}
+
 #commit .human .actor
 {
     clear: left;
@@ -438,14 +446,15 @@ li.row-header { background-image: none; background-color: #FFFFFF; font-weight: 
 
 #commit .human .actor .name
 {
-    line-height: 1.5em;
+    line-height: 18px;
+    font-size: 13px;
 }
 
 #commit .human .actor .date
 {
     color: #888;
-    font-size: 90%;
-    line-height: 1em;
+    line-height: 15px;
+    font-size: 12px;
 }
 
 #commit .machine
@@ -552,3 +561,56 @@ li.row-header { background-image: none; background-color: #FFFFFF; font-weight: 
 #build-steps tr.fail        { background-color: #FFDDDD; }
 #build-steps tr.testfail    { background-color: #FFCC66; }
 #build-steps tr.executing   { background-color: #FFF095; }
+
+.buglist
+{
+    width: 330px;
+    background-color: #eeeeee;
+    border: solid 1px #cccccc;
+    padding: 5px;
+    color: Black;
+    font-size: 12px;
+    -moz-border-radius: 5px;
+    margin: 10px;
+}
+
+.buglist table tr td a
+{
+    color: #000000;    
+}
+
+.buglist table tr td a:hover
+{
+    text-decoration: underline;    
+}
+
+.buglist table tr td
+{
+    font-size: 12px;
+}
+
+.buglist table tr td.strike
+{
+    text-decoration: line-through;
+}
+
+.bugchart
+{
+    width: 330px;
+    background-color: #ffffff;
+    border: solid 1px #cccccc;
+    padding: 5px;
+    color: Black;
+    font-size: 16px;
+    font-weight: bold;
+    -moz-border-radius: 5px;
+    margin: 10px;
+    text-align: center;
+}
+
+.bugtitle
+{
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}

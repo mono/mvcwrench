@@ -1,8 +1,8 @@
-﻿//
+//
 // Authors:
 // Jonathan Pobst (monkey@jpobst.com)
 //
-// Copyright (C) 2009 Jonathan Pobst
+// Copyright (C) 2010 Jonathan Pobst
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -25,64 +25,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Web.Mvc;
+using MvcWrench.MonkeyWrench.Public;
 
-namespace MvcWrench
+namespace MvcWrench.Controllers
 {
-	public static class Cache
+	public class HomeController : ApplicationController
 	{
-		public static ExpiringCache Instance = new ExpiringCache ();
-	}
-	
-	public class ExpiringCache
-	{
-		private Dictionary<string, CacheItem> cache = new Dictionary<string,CacheItem> ();
-		
-		public ExpiringCache ()
+		public ActionResult Index ()
 		{
-		}
-		
-		public void Add (string key, object item, int timeout)
-		{
-			cache[key] = new CacheItem (timeout, item);
-		}
-		
-		public object Get (string key)
-		{
-			if (!cache.ContainsKey (key))
-				return null;
-				
-			CacheItem item = cache[key];
+			List<BugzillaEntry> bugs = (List<BugzillaEntry>)Cache.Instance.Get ("buglist");
 			
-			if (item.IsExpired) {
-				cache.Remove (key);
-				return null;
+			if (bugs == null) {
+				bugs = BugzillaInterface.GetLatestBugs ();
+				Cache.Instance.Add ("buglist", bugs, 3 * 60);
 			}
-				
-			return item.Value;
-		}
-		
-		private class CacheItem
-		{
-			public DateTime ExpireTime;
-			public object Value;
+
+			Revision[] recent_revisions = (Revision[])Cache.Instance.Get ("recent_revisions");
 			
-			public CacheItem (DateTime expire, object value)
-			{
-				ExpireTime = expire;
-				Value = value;
+			if (recent_revisions == null) {
+				try {
+					MonkeyWrench.Public.Public ws = new MvcWrench.MonkeyWrench.Public.Public ();
+					recent_revisions = ws.GetProductLatestRevisions (1, 20);
+					Cache.Instance.Add ("recent_revisions", recent_revisions, 5 * 60);
+				} catch (Exception) {
+					recent_revisions = new Revision[0];
+				}
 			}
-			
-			public CacheItem (int timeout, object value)
-			{
-				ExpireTime = DateTime.Now.AddSeconds (timeout);
-				Value = value;
-			}
-			
-			public bool IsExpired {
-				get { return DateTime.Now > ExpireTime; }
-			}
+
+			ViewData["Revisions"] = recent_revisions;
+
+			return View ("Home", bugs);
 		}
 	}
 }

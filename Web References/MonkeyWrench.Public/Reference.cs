@@ -35,6 +35,8 @@ namespace MvcWrench.MonkeyWrench.Public {
         
         private System.Threading.SendOrPostCallback GetBuildLogOperationCompleted;
         
+        private System.Threading.SendOrPostCallback GetProductLatestRevisionsOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -81,6 +83,9 @@ namespace MvcWrench.MonkeyWrench.Public {
         
         /// <remarks/>
         public event GetBuildLogCompletedEventHandler GetBuildLogCompleted;
+        
+        /// <remarks/>
+        public event GetProductLatestRevisionsCompletedEventHandler GetProductLatestRevisionsCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetRecentData", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -166,6 +171,37 @@ namespace MvcWrench.MonkeyWrench.Public {
             if ((this.GetBuildLogCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.GetBuildLogCompleted(this, new GetBuildLogCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetProductLatestRevisions", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Revision[] GetProductLatestRevisions(int productID, int limit) {
+            object[] results = this.Invoke("GetProductLatestRevisions", new object[] {
+                        productID,
+                        limit});
+            return ((Revision[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetProductLatestRevisionsAsync(int productID, int limit) {
+            this.GetProductLatestRevisionsAsync(productID, limit, null);
+        }
+        
+        /// <remarks/>
+        public void GetProductLatestRevisionsAsync(int productID, int limit, object userState) {
+            if ((this.GetProductLatestRevisionsOperationCompleted == null)) {
+                this.GetProductLatestRevisionsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetProductLatestRevisionsOperationCompleted);
+            }
+            this.InvokeAsync("GetProductLatestRevisions", new object[] {
+                        productID,
+                        limit}, this.GetProductLatestRevisionsOperationCompleted, userState);
+        }
+        
+        private void OnGetProductLatestRevisionsOperationCompleted(object arg) {
+            if ((this.GetProductLatestRevisionsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetProductLatestRevisionsCompleted(this, new GetProductLatestRevisionsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -289,6 +325,111 @@ namespace MvcWrench.MonkeyWrench.Public {
             }
             set {
                 this.authorField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "2.0.50727.4927")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class Revision {
+        
+        private int idField;
+        
+        private int productIdField;
+        
+        private int revisionNumberField;
+        
+        private System.DateTime timeField;
+        
+        private string authorField;
+        
+        private int statusField;
+        
+        private string svnLogField;
+        
+        private string fileDiffField;
+        
+        /// <remarks/>
+        public int Id {
+            get {
+                return this.idField;
+            }
+            set {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int ProductId {
+            get {
+                return this.productIdField;
+            }
+            set {
+                this.productIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int RevisionNumber {
+            get {
+                return this.revisionNumberField;
+            }
+            set {
+                this.revisionNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public System.DateTime Time {
+            get {
+                return this.timeField;
+            }
+            set {
+                this.timeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Author {
+            get {
+                return this.authorField;
+            }
+            set {
+                this.authorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int Status {
+            get {
+                return this.statusField;
+            }
+            set {
+                this.statusField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string SvnLog {
+            get {
+                return this.svnLogField;
+            }
+            set {
+                this.svnLogField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string FileDiff {
+            get {
+                return this.fileDiffField;
+            }
+            set {
+                this.fileDiffField = value;
             }
         }
     }
@@ -484,6 +625,32 @@ namespace MvcWrench.MonkeyWrench.Public {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.4927")]
+    public delegate void GetProductLatestRevisionsCompletedEventHandler(object sender, GetProductLatestRevisionsCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.4927")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetProductLatestRevisionsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetProductLatestRevisionsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Revision[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Revision[])(this.results[0]));
             }
         }
     }

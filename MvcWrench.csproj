@@ -40,6 +40,9 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.ServiceModel.Web">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Web.Abstractions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -53,6 +56,7 @@
   <ItemGroup>
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\BuildsController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -61,6 +65,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\BugzillaInterface.cs" />
     <Compile Include="Helpers\ExpiringCache.cs" />
     <Compile Include="Helpers\MonkeyWrenchHelper.cs" />
     <Compile Include="Helpers\UserHelpers.cs" />
@@ -178,16 +183,22 @@
     <Content Include="Media\BreadCrumb\bc_bg.png" />
     <Content Include="Media\BreadCrumb\bc_separator.png" />
     <Content Include="Media\bricks.png" />
+    <Content Include="Media\bug.png" />
     <Content Include="Media\calendar.png" />
     <Content Include="Media\error.png" />
     <Content Include="Media\fail.png" />
+    <Content Include="Media\house.png" />
     <Content Include="Media\moon.png" />
     <Content Include="Media\pass.png" />
     <Content Include="Media\report.png" />
+    <Content Include="Views\Home\BugChart.ascx" />
+    <Content Include="Views\Home\BugList.ascx" />
     <Content Include="Views\Builds\BuildStatus.aspx" />
     <Content Include="Views\Builds\BuildStatusLog.aspx" />
     <Content Include="Views\Builds\BuildStepList.ascx" />
     <Content Include="Views\Builds\BuildStepTable.ascx" />
+    <Content Include="Views\Home\Home.aspx" />
+    <Content Include="Views\Home\RecentRevisions.ascx" />
     <Content Include="Views\Builds\RevisionDetails.aspx" />
     <Content Include="Views\Shared\CommitHeader.ascx" />
     <Content Include="Views\Status\Index.aspx" />
@@ -204,6 +215,9 @@
     <None Include="Web References\MonkeyWrench.Public\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\MonkeyWrench.Public\Revision.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\mono-build\DBLaneDeletionDirectiveView.datasource">
       <DependentUpon>Reference.map</DependentUpon>

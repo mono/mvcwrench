@@ -112,6 +112,25 @@ namespace MvcWrench
 			
 			return row;
 		}
+
+		public static StatusStripRow GetHeaderRow (BuildRevision[] revs)
+		{
+			StatusStripRow row = new StatusStripRow ();
+			row.IsHeader = true;
+			row.HeaderText = "Mono - Trunk";
+
+			foreach (var item in revs) {
+				StatusStripCell cell = new StatusStripCell ();
+				cell.Text = item.Author;
+				//cell.Status = item.Status;
+
+				//cell.Url = string.Format ("~/builds/msvc/{0}", item.Id);
+				cell.IsHeader = true;
+				row.Cells.Add (cell);
+			}
+
+			return row;
+		}
 		
 		private static int ConvertState (int state)
 		{

@@ -42,12 +42,12 @@ namespace MvcWrench
 			routes.IgnoreRoute ("{resource}.axd/{*pathInfo}");
 
 			// Builds
+			routes.MapRoute ("BuildsMsvcLog", "builds/msvc/{buildrevisionid}/{completedstepid}", new { controller = "Builds", action = "BuildStatusLog", id = "" });
 			routes.MapRoute ("BuildsMonoExtended", "builds/monoextended", new { controller = "Builds", action = "MonoExtended", id = "" });
 			routes.MapRoute ("BuildsOther", "builds/other", new { controller = "Builds", action = "Other", id = "" });
 			routes.MapRoute ("BuildsMonoRevision", "builds/{project}/{platform}/{revision}", new { controller = "Builds", action = "RevisionDetails", id = "" });
 			routes.MapRoute ("BuildsMono", "builds/mono", new { controller = "Builds", action = "Index", id = "" });
 			routes.MapRoute ("BuildsMsvc", "builds/msvc/{buildrevisionid}", new { controller = "Builds", action = "BuildStatus", id = "" });
-			routes.MapRoute ("BuildsMsvcLog", "builds/msvc/{buildrevisionid}/{completedstepid}", new { controller = "Builds", action = "BuildStatusLog", id = "" });
 			routes.MapRoute ("BuildsOverview", "builds", new { controller = "Builds", action = "Index", id = "" });
 
 			// Status
@@ -58,7 +58,7 @@ namespace MvcWrench
 			routes.MapRoute (
 			    "Default",                                              // Route name
 			    "{controller}/{action}/{id}",                           // URL with parameters
-			    new { controller = "Builds", action = "Index", id = "" }  // Parameter defaults
+			    new { controller = "Home", action = "Index", id = "" }  // Parameter defaults
 			);
 
 		}
