@@ -11,7 +11,7 @@
           <% Html.RenderPartial ("RecentRevisions", ViewData["Revisions"]); %>
         </td>
         <td>
-          <% Html.RenderPartial ("BugChart", Model); %>
+          <% if (!string.IsNullOrEmpty ((string)ViewData["BugCounts"])) Html.RenderPartial ("BugChart", (string)ViewData["BugCounts"]);  %>
           <% Html.RenderPartial ("BugList", Model); %>
         </td>
       </tr>

@@ -37,6 +37,8 @@ namespace MvcWrench.MonkeyWrench.Public {
         
         private System.Threading.SendOrPostCallback GetProductLatestRevisionsOperationCompleted;
         
+        private System.Threading.SendOrPostCallback GetLatestBugCountsOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -86,6 +88,9 @@ namespace MvcWrench.MonkeyWrench.Public {
         
         /// <remarks/>
         public event GetProductLatestRevisionsCompletedEventHandler GetProductLatestRevisionsCompleted;
+        
+        /// <remarks/>
+        public event GetLatestBugCountsCompletedEventHandler GetLatestBugCountsCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetRecentData", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -202,6 +207,35 @@ namespace MvcWrench.MonkeyWrench.Public {
             if ((this.GetProductLatestRevisionsCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.GetProductLatestRevisionsCompleted(this, new GetProductLatestRevisionsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetLatestBugCounts", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string[] GetLatestBugCounts(int limit) {
+            object[] results = this.Invoke("GetLatestBugCounts", new object[] {
+                        limit});
+            return ((string[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetLatestBugCountsAsync(int limit) {
+            this.GetLatestBugCountsAsync(limit, null);
+        }
+        
+        /// <remarks/>
+        public void GetLatestBugCountsAsync(int limit, object userState) {
+            if ((this.GetLatestBugCountsOperationCompleted == null)) {
+                this.GetLatestBugCountsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetLatestBugCountsOperationCompleted);
+            }
+            this.InvokeAsync("GetLatestBugCounts", new object[] {
+                        limit}, this.GetLatestBugCountsOperationCompleted, userState);
+        }
+        
+        private void OnGetLatestBugCountsOperationCompleted(object arg) {
+            if ((this.GetLatestBugCountsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetLatestBugCountsCompleted(this, new GetLatestBugCountsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -651,6 +685,32 @@ namespace MvcWrench.MonkeyWrench.Public {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((Revision[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.4927")]
+    public delegate void GetLatestBugCountsCompletedEventHandler(object sender, GetLatestBugCountsCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.4927")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetLatestBugCountsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetLatestBugCountsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string[])(this.results[0]));
             }
         }
     }

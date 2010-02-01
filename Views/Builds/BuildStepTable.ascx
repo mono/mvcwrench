@@ -18,9 +18,9 @@
             <td style="width: 150px"><%= item.Name %></td>
 
             <td class="center-text"><%= item.Results %></td>
-            <td class="center-text wide"><%= item.ElapsedTime.ToHoursMinSec ()%></td>
+            <td class="center-text wide"><%= string.IsNullOrEmpty (item.LogUrl) ? "" : item.ElapsedTime.ToHoursMinSec ()%></td>
             <% if (string.IsNullOrEmpty (item.LogUrl)) { %>
-            <td class="icon-column"><img src="<%= Html.ResolveUrl ("~/Media/report.png") %>" alt="View Log" title="View Log" /></td>
+            <td class="icon-column">&nbsp;</td>
             <% } else { %>
             <td class="icon-column"><a href="<%= item.LogUrl %>"><img src="<%= Html.ResolveUrl ("~/Media/report.png") %>" alt="View Log" title="View Log" /></a></td>
             <% } %>

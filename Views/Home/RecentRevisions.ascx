@@ -11,7 +11,7 @@
                     <div class="name"><%= item.Author %></div>
                     <div class="date"><%= item.Time.ToString () %></div>
                 </div>
-               <pre><%= item.SvnLog %></pre>
+               <pre><%= Html.Encode (item.SvnLog.TrimEnd ()) %></pre>
             </div>
         </div>
 <% } %>

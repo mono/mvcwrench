@@ -26,8 +26,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.ServiceModel.Syndication;
+using System.Net;
+//using System.ServiceModel.Syndication;
 using System.Xml;
 
 namespace MvcWrench
@@ -45,17 +45,19 @@ namespace MvcWrench
 
 				string url = @"https://bugzilla.novell.com/buglist.cgi?chfield=[Bug%20creation]&chfieldfrom=7d&chfieldto=Now&classification=Mono&product=Mono%20Tasks&product=Mono%3A%20Class%20Libraries%20&product=Mono%3A%20Compilers&product=Mono%3A%20Debugger&product=Mono%3A%20Doctools&product=Mono%3A%20Runtime&product=Mono%3A%20Tools&query_format=advanced&ctype=rss";
 
-				SyndicationFeed feed = null;
+				XmlDocument doc = new XmlDocument ();
 
-				using (XmlTextReader r = new XmlTextReader (url))
-					feed = SyndicationFeed.Load (r);
-
-				IEnumerable<SyndicationItem> items = feed.Items.OrderByDescending (p => p.Id).Take (count);
-
+				using (WebClient wc = new WebClient ()) {
+					string xml = wc.DownloadString (url);
+					doc.LoadXml (xml);
+				}
+					
 				bugs = new List<BugzillaEntry> ();
 
-				foreach (var item in items)
+				foreach (XmlElement item in doc["feed"].GetElementsByTagName ("entry"))
 					bugs.Add (new BugzillaEntry (item));
+					
+				bugs = bugs.OrderByDescending (p => p.Number).Take (count).ToList ();
 					
 				cache.Add ("bugs", bugs, 10 * 60);
 			}
@@ -80,15 +82,46 @@ namespace MvcWrench
 		{
 		}
 
-		public BugzillaEntry (SyndicationItem entry)
+		//public BugzillaEntry (SyndicationItem entry)
+		//{
+		//        Url = entry.Id;
+		//        Title = entry.Title.Text;
+		//        Number = Url.Substring (Url.Length - 6);
+		//        Date = entry.LastUpdatedTime;
+
+		//        XmlDocument doc = new XmlDocument ();
+		//        doc.LoadXml (entry.Summary.Text);
+
+		//        Product = GetData (doc, "bz_feed_product");
+		//        Component = GetData (doc, "bz_feed_component");
+		//        Reporter = GetData (doc, "bz_feed_reporter");
+		//        AssignedTo = GetData (doc, "bz_feed_assignee");
+
+		//        string status = GetData (doc, "bz_feed_bug_status");
+
+		//        switch (status.ToLowerInvariant ()) {
+		//                case "new":
+		//                case "assigned":
+		//                        Status = BugzillaStatus.New;
+		//                        break;
+		//                case "reopened":
+		//                        Status = BugzillaStatus.Reopened;
+		//                        break;
+		//                case "resolved":
+		//                        Status = BugzillaStatus.Resolved;
+		//                        break;
+		//        }
+		//}
+
+		public BugzillaEntry (XmlElement xe)
 		{
-			Url = entry.Id;
-			Title = entry.Title.Text;
+			Url = xe["id"].InnerText;
+			Title = xe["title"].InnerText;
 			Number = Url.Substring (Url.Length - 6);
-			Date = entry.LastUpdatedTime;
+			Date = DateTimeOffset.Parse (xe["updated"].InnerText);
 
 			XmlDocument doc = new XmlDocument ();
-			doc.LoadXml (entry.Summary.Text);
+			doc.LoadXml (xe["summary"].InnerText);
 
 			Product = GetData (doc, "bz_feed_product");
 			Component = GetData (doc, "bz_feed_component");
@@ -110,7 +143,7 @@ namespace MvcWrench
 					break;
 			}
 		}
-
+		
 		private string GetData (XmlDocument doc, string type)
 		{
 			XmlElement xe = (XmlElement)doc.SelectSingleNode (string.Format ("//table/tr[@class = \"{0}\"]", type));

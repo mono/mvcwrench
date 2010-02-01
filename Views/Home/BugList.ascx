@@ -1,6 +1,6 @@
 <%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<List<MvcWrench.BugzillaEntry>>" %>
 <div class="buglist">
-<div class="bugtitle">Latest Reported Bugs</div>
+<div class="bugtitle"><a href="http://www.mono-project.com/Bugs">Latest Reported Bugs</a></div>
 <table cellspacing="5">
 <% foreach (var item in Model) { %>
     <tr>

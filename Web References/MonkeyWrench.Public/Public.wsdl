@@ -111,6 +111,25 @@
           <s:element minOccurs="0" maxOccurs="1" name="FileDiff" type="s:string" />
         </s:sequence>
       </s:complexType>
+      <s:element name="GetLatestBugCounts">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="limit" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLatestBugCountsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLatestBugCountsResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="GetRecentDataSoapIn">
@@ -137,6 +156,12 @@
   <wsdl:message name="GetProductLatestRevisionsSoapOut">
     <wsdl:part name="parameters" element="tns:GetProductLatestRevisionsResponse" />
   </wsdl:message>
+  <wsdl:message name="GetLatestBugCountsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLatestBugCounts" />
+  </wsdl:message>
+  <wsdl:message name="GetLatestBugCountsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLatestBugCountsResponse" />
+  </wsdl:message>
   <wsdl:portType name="PublicSoap">
     <wsdl:operation name="GetRecentData">
       <wsdl:input message="tns:GetRecentDataSoapIn" />
@@ -153,6 +178,10 @@
     <wsdl:operation name="GetProductLatestRevisions">
       <wsdl:input message="tns:GetProductLatestRevisionsSoapIn" />
       <wsdl:output message="tns:GetProductLatestRevisionsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLatestBugCounts">
+      <wsdl:input message="tns:GetLatestBugCountsSoapIn" />
+      <wsdl:output message="tns:GetLatestBugCountsSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="PublicSoap" type="tns:PublicSoap">
@@ -193,6 +222,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetLatestBugCounts">
+      <soap:operation soapAction="http://tempuri.org/GetLatestBugCounts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="PublicSoap12" type="tns:PublicSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -225,6 +263,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetProductLatestRevisions">
       <soap12:operation soapAction="http://tempuri.org/GetProductLatestRevisions" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLatestBugCounts">
+      <soap12:operation soapAction="http://tempuri.org/GetLatestBugCounts" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

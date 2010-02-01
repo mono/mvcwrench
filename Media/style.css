@@ -18,9 +18,15 @@ img
     border: none;
 }
 
-a
+a, a:visited
 {
+    color: #000000;
     text-decoration: none;
+}
+
+a:hover
+{
+    text-decoration: underline
 }
 
 pre
@@ -77,6 +83,11 @@ pre
     padding: 6px 10px 0px 10px;
     font-weight: bold;
     color: #FFF;
+}
+
+#topmenu a:hover
+{
+    text-decoration: none;
 }
 
 #topmenu a img
@@ -267,13 +278,7 @@ pre
     background-repeat: no-repeat;
     background-position: right;
     padding-right: 15px;
-    text-decoration: none;
     color: #454545;
-}
-
-.breadcrumb a:hover
-{
-    text-decoration: underline;
 }
 
 .clearer
@@ -312,11 +317,6 @@ pre
 .statusstrip li a
 {
     color: #000;
-}
-
-.statusstrip li a:hover
-{
-    text-decoration: underline;
 }
 
 .statusstrip li.notrun a
@@ -579,11 +579,6 @@ li.row-header { background-image: none; background-color: #FFFFFF; font-weight: 
     color: #000000;    
 }
 
-.buglist table tr td a:hover
-{
-    text-decoration: underline;    
-}
-
 .buglist table tr td
 {
     font-size: 12px;
@@ -608,9 +603,10 @@ li.row-header { background-image: none; background-color: #FFFFFF; font-weight: 
     text-align: center;
 }
 
-.bugtitle
+.bugtitle, .bugtitle a
 {
     text-align: center;
     font-size: 16px;
     font-weight: bold;
+    color: #000000;
 }

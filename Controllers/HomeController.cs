@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using MvcWrench.MonkeyWrench.Public;
+using System.Text;
 
 namespace MvcWrench.Controllers
 {
@@ -34,12 +35,21 @@ namespace MvcWrench.Controllers
 	{
 		public ActionResult Index ()
 		{
-			List<BugzillaEntry> bugs = (List<BugzillaEntry>)Cache.Instance.Get ("buglist");
-			
-			if (bugs == null) {
-				bugs = BugzillaInterface.GetLatestBugs ();
-				Cache.Instance.Add ("buglist", bugs, 3 * 60);
+			List<BugzillaEntry> bugs;
+
+			try {
+				bugs = (List<BugzillaEntry>)Cache.Instance.Get ("buglist");
+
+				if (bugs == null) {
+					bugs = BugzillaInterface.GetLatestBugs ();
+					//bugs = new List<BugzillaEntry> ();
+					Cache.Instance.Add ("buglist", bugs, 3 * 60);
+				}				
+			} catch (Exception ex) {
+				bugs = new List<BugzillaEntry> ();
+				//throw;
 			}
+			
 
 			Revision[] recent_revisions = (Revision[])Cache.Instance.Get ("recent_revisions");
 			
@@ -53,8 +63,37 @@ namespace MvcWrench.Controllers
 				}
 			}
 
-			ViewData["Revisions"] = recent_revisions;
+			string bugcounts = (string)Cache.Instance.Get ("bugcounts");
 
+			if (bugcounts == null) {
+				try {
+					MonkeyWrench.Public.Public ws = new MvcWrench.MonkeyWrench.Public.Public ();
+					string[] counts = ws.GetLatestBugCounts (7);
+					
+					StringBuilder sb = new StringBuilder ();
+
+					foreach (string item in counts)
+						sb.AppendFormat ("{0},", (int)(int.Parse (item.Split (',')[0]) / 25f));
+						
+					sb.Remove (sb.Length - 1, 1);
+					sb.Append ("|");
+
+					foreach (string item in counts)
+						sb.AppendFormat ("{0},", (int)(int.Parse (item.Split (',')[1]) / 25f));
+
+					sb.Remove (sb.Length - 1, 1);
+
+					bugcounts = sb.ToString ();
+
+					Cache.Instance.Add ("bugcounts", bugcounts, 60 * 60);
+				} catch (Exception) {
+					bugcounts = null;
+				}
+			}
+			
+			ViewData["Revisions"] = recent_revisions;
+			ViewData["BugCounts"] = bugcounts;
+			
 			return View ("Home", bugs);
 		}
 	}
