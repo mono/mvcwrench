@@ -1,5 +1,5 @@
 <%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<MvcWrench.Models.Commit>" %>
-    <div id="commit">
+    <div id="commit" style="padding-bottom: 0px;">
             <div class="human">
                 <div class="actor">
                     <div class="gravatar">
@@ -9,7 +9,7 @@
                     <div class="date"><%= Model.CommitTime.ToString () %></div>
                 </div>
                <pre><%= Model.CommitLog %></pre>
-                
+               <table><tr><td><a href="<%= Html.ResolveUrl (string.Format ("~/builds/mono/{0}", Model.Revision)) %>"><img src="<%= Html.ResolveUrl ("~/Media/diff.png") %>" alt="View Diff" /></a></td><td><a href="<%= Html.ResolveUrl (string.Format ("~/builds/mono/{0}", Model.Revision)) %>" style="font-weight: normal;">View Diff</a></td></tr></table>
             </div>
             <div class="machine">
                 Revision: <%= Model.Revision %><br />

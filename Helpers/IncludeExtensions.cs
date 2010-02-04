@@ -82,37 +82,45 @@ public static class IncludeExtensions
 		TimeSpan diff = DateTime.Now - dt;
 
 		if (diff.TotalDays >= 365)
-			return string.Format ("{0} years", diff.Days / 365);
+			return Plural ("{0} {1}", "year", diff.Days / 365);
 		if (diff.TotalDays >= 60)
-			return string.Format ("{0} months", diff.Days / 30);
+			return Plural ("{0} {1}", "month", diff.Days / 30);
 		if (diff.TotalDays >= 14)
-			return string.Format ("{0} weeks", diff.Days / 7);
-		if (diff.TotalDays >= 2)
-			return string.Format ("{0} days", diff.Days);
+			return Plural ("{0} {1}", "week", diff.Days / 7);
+		if (diff.TotalDays >= 1)
+			return Plural ("{0} {1}", "day", diff.Days);
 		if (diff.TotalHours >= 1)
-			return string.Format ("{0} hours", (int)diff.TotalHours);
+			return Plural ("{0} {1}", "hour", (int)diff.TotalHours);
 		if (diff.TotalMinutes >= 1)
-			return string.Format ("{0} minutes", (int)diff.TotalMinutes);
+			return Plural ("{0} {1}", "minute", (int)diff.TotalMinutes);
 
-		return string.Format ("{0} seconds", diff.Seconds);
+		return Plural ("{0} {1}", "second", diff.Seconds);
 	}
 
+	private static string Plural (string format, string singular, int value)
+	{
+		if (value == 1)
+			return string.Format (format, value, singular);
+
+		return string.Format (format + "s", value, singular);
+	}
+	
 	public static string ToFriendlySpan (this TimeSpan diff)
 	{
 		if (diff.TotalDays >= 365)
-			return string.Format ("{0} years", diff.Days / 365);
+			return Plural ("{0} {1}", "year", diff.Days / 365);
 		if (diff.TotalDays >= 60)
-			return string.Format ("{0} months", diff.Days / 30);
+			return Plural ("{0} {1}", "month", diff.Days / 30);
 		if (diff.TotalDays >= 14)
-			return string.Format ("{0} weeks", diff.Days / 7);
-		if (diff.TotalDays >= 2)
-			return string.Format ("{0} days", diff.Days);
+			return Plural ("{0} {1}", "week", diff.Days / 7);
+		if (diff.TotalDays >= 1)
+			return Plural ("{0} {1}", "day", diff.Days);
 		if (diff.TotalHours >= 1)
-			return string.Format ("{0} hours", (int)diff.TotalHours);
+			return Plural ("{0} {1}", "hour", (int)diff.TotalHours);
 		if (diff.TotalMinutes >= 1)
-			return string.Format ("{0} minutes", (int)diff.TotalMinutes);
+			return Plural ("{0} {1}", "minute", (int)diff.TotalMinutes);
 
-		return string.Format ("{0} seconds", diff.Seconds);
+		return Plural ("{0} {1}", "second", diff.Seconds);
 	}
 
 	public static string ToHoursMinSec (this TimeSpan diff)

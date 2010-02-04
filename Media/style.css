@@ -26,7 +26,7 @@ a, a:visited
 
 a:hover
 {
-    text-decoration: underline
+    text-decoration: underline;
 }
 
 pre
