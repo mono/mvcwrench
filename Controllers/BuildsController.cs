@@ -409,51 +409,69 @@ namespace MvcWrench.Controllers
 
 		public ActionResult RevisionDiff (string project, string revision)
 		{
-			int revision_id;
-
-			WebServices ws = new WebServices ();
-			WebServiceLogin login = new WebServiceLogin ();
-
-			var rev = ws.FindRevision (login, null, revision);
-			revision_id = rev.Revision.id;
-
-			string log;
-			string diff;
-			
-			// Download the commit log to add
-			string url = string.Format ("http://build.mono-project.com/GetRevisionLog.aspx?id={0}", revision_id);
-
-			WebClient wc = new WebClient ();
-			string content = wc.DownloadString (url);
-
-			Regex reg = new Regex (@"\<pre\ id\=\""ctl00_content_log\""\>(?<data>(?:.|\n)*?)\<\/pre\>", RegexOptions.Multiline);
-			Match m = reg.Match (content);
-			log = m.Groups["data"].Value.Trim ();
-
-			reg = new Regex (@"\<pre\ id\=\""ctl00_content_diff\""\>(?<data>(?:.|\n)*?)\<\/pre\>", RegexOptions.Multiline);
-			m = reg.Match (content);
-			diff = m.Groups["data"].Value.Trim ();
-
-			Revision r = new Revision ();
-			
-			r.Author = rev.Revision.author;
-			r.SvnLog = log;
-			r.RevisionNumber = int.Parse (revision);
-			r.Time = rev.Revision.date;
+			MonkeyWrench.Public.Public ws2 = new Public ();
+			Revision r = ws2.GetRevisionByRevision (int.Parse (revision));
 
 			ViewData["PageTitle"] = string.Format ("MonkeyWrench - Revision {0}", r.RevisionNumber);
 
-			if (string.IsNullOrEmpty (diff))
+			if (string.IsNullOrEmpty (r.FileDiff))
 				ViewData["Diff"] = "Diff not available";
 			else {
 				try {
-					ViewData["Diff"] = new DiffViewer (System.Web.HttpUtility.HtmlDecode (diff));
+					ViewData["Diff"] = new DiffViewer (r.FileDiff);
 				} catch {
-					ViewData["Diff"] = System.Web.HttpUtility.HtmlDecode (diff);
+					ViewData["Diff"] = r.FileDiff;
 				}
 			}
 
 			return View ("RevisionDiff", r);
+
+			
+			//int revision_id;
+
+			//WebServices ws = new WebServices ();
+			//WebServiceLogin login = new WebServiceLogin ();
+
+			//var rev = ws.FindRevision (login, null, revision);
+			//revision_id = rev.Revision.id;
+
+			//string log;
+			//string diff;
+			
+			//// Download the commit log to add
+			//string url = string.Format ("http://build.mono-project.com/GetRevisionLog.aspx?id={0}", revision_id);
+
+			//WebClient wc = new WebClient ();
+			//string content = wc.DownloadString (url);
+
+			//Regex reg = new Regex (@"\<pre\ id\=\""ctl00_content_log\""\>(?<data>(?:.|\n)*?)\<\/pre\>", RegexOptions.Multiline);
+			//Match m = reg.Match (content);
+			//log = m.Groups["data"].Value.Trim ();
+
+			//reg = new Regex (@"\<pre\ id\=\""ctl00_content_diff\""\>(?<data>(?:.|\n)*?)\<\/pre\>", RegexOptions.Multiline);
+			//m = reg.Match (content);
+			//diff = m.Groups["data"].Value.Trim ();
+
+			//Revision r = new Revision ();
+			
+			//r.Author = rev.Revision.author;
+			//r.SvnLog = System.Web.HttpUtility.HtmlDecode (log);
+			//r.RevisionNumber = int.Parse (revision);
+			//r.Time = rev.Revision.date;
+
+			//ViewData["PageTitle"] = string.Format ("MonkeyWrench - Revision {0}", r.RevisionNumber);
+
+			//if (string.IsNullOrEmpty (diff))
+			//        ViewData["Diff"] = "Diff not available";
+			//else {
+			//        try {
+			//                ViewData["Diff"] = new DiffViewer (System.Web.HttpUtility.HtmlDecode (diff));
+			//        } catch {
+			//                ViewData["Diff"] = System.Web.HttpUtility.HtmlDecode (diff);
+			//        }
+			//}
+
+			//return View ("RevisionDiff", r);
 		}
 		
 		private bool FindHostAndLane (string project, string platform, out int host, out int lane)

@@ -35,6 +35,8 @@ namespace MvcWrench.MonkeyWrench.Public {
         
         private System.Threading.SendOrPostCallback GetBuildLogOperationCompleted;
         
+        private System.Threading.SendOrPostCallback GetRevisionByRevisionOperationCompleted;
+        
         private System.Threading.SendOrPostCallback GetProductLatestRevisionsOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetLatestBugCountsOperationCompleted;
@@ -85,6 +87,9 @@ namespace MvcWrench.MonkeyWrench.Public {
         
         /// <remarks/>
         public event GetBuildLogCompletedEventHandler GetBuildLogCompleted;
+        
+        /// <remarks/>
+        public event GetRevisionByRevisionCompletedEventHandler GetRevisionByRevisionCompleted;
         
         /// <remarks/>
         public event GetProductLatestRevisionsCompletedEventHandler GetProductLatestRevisionsCompleted;
@@ -176,6 +181,35 @@ namespace MvcWrench.MonkeyWrench.Public {
             if ((this.GetBuildLogCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.GetBuildLogCompleted(this, new GetBuildLogCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetRevisionByRevision", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Revision GetRevisionByRevision(int revision) {
+            object[] results = this.Invoke("GetRevisionByRevision", new object[] {
+                        revision});
+            return ((Revision)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetRevisionByRevisionAsync(int revision) {
+            this.GetRevisionByRevisionAsync(revision, null);
+        }
+        
+        /// <remarks/>
+        public void GetRevisionByRevisionAsync(int revision, object userState) {
+            if ((this.GetRevisionByRevisionOperationCompleted == null)) {
+                this.GetRevisionByRevisionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetRevisionByRevisionOperationCompleted);
+            }
+            this.InvokeAsync("GetRevisionByRevision", new object[] {
+                        revision}, this.GetRevisionByRevisionOperationCompleted, userState);
+        }
+        
+        private void OnGetRevisionByRevisionOperationCompleted(object arg) {
+            if ((this.GetRevisionByRevisionCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetRevisionByRevisionCompleted(this, new GetRevisionByRevisionCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -659,6 +693,32 @@ namespace MvcWrench.MonkeyWrench.Public {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.4927")]
+    public delegate void GetRevisionByRevisionCompletedEventHandler(object sender, GetRevisionByRevisionCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.4927")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetRevisionByRevisionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetRevisionByRevisionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Revision Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Revision)(this.results[0]));
             }
         }
     }

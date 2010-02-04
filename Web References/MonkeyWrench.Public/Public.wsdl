@@ -79,6 +79,32 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="GetRevisionByRevision">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="revision" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetRevisionByRevisionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetRevisionByRevisionResult" type="tns:Revision" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Revision">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ProductId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="RevisionNumber" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Time" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Author" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Status" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="SvnLog" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FileDiff" type="s:string" />
+        </s:sequence>
+      </s:complexType>
       <s:element name="GetProductLatestRevisions">
         <s:complexType>
           <s:sequence>
@@ -97,18 +123,6 @@
       <s:complexType name="ArrayOfRevision">
         <s:sequence>
           <s:element minOccurs="0" maxOccurs="unbounded" name="Revision" nillable="true" type="tns:Revision" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="Revision">
-        <s:sequence>
-          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
-          <s:element minOccurs="1" maxOccurs="1" name="ProductId" type="s:int" />
-          <s:element minOccurs="1" maxOccurs="1" name="RevisionNumber" type="s:int" />
-          <s:element minOccurs="1" maxOccurs="1" name="Time" type="s:dateTime" />
-          <s:element minOccurs="0" maxOccurs="1" name="Author" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="Status" type="s:int" />
-          <s:element minOccurs="0" maxOccurs="1" name="SvnLog" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="FileDiff" type="s:string" />
         </s:sequence>
       </s:complexType>
       <s:element name="GetLatestBugCounts">
@@ -150,6 +164,12 @@
   <wsdl:message name="GetBuildLogSoapOut">
     <wsdl:part name="parameters" element="tns:GetBuildLogResponse" />
   </wsdl:message>
+  <wsdl:message name="GetRevisionByRevisionSoapIn">
+    <wsdl:part name="parameters" element="tns:GetRevisionByRevision" />
+  </wsdl:message>
+  <wsdl:message name="GetRevisionByRevisionSoapOut">
+    <wsdl:part name="parameters" element="tns:GetRevisionByRevisionResponse" />
+  </wsdl:message>
   <wsdl:message name="GetProductLatestRevisionsSoapIn">
     <wsdl:part name="parameters" element="tns:GetProductLatestRevisions" />
   </wsdl:message>
@@ -174,6 +194,10 @@
     <wsdl:operation name="GetBuildLog">
       <wsdl:input message="tns:GetBuildLogSoapIn" />
       <wsdl:output message="tns:GetBuildLogSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRevisionByRevision">
+      <wsdl:input message="tns:GetRevisionByRevisionSoapIn" />
+      <wsdl:output message="tns:GetRevisionByRevisionSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="GetProductLatestRevisions">
       <wsdl:input message="tns:GetProductLatestRevisionsSoapIn" />
@@ -206,6 +230,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetBuildLog">
       <soap:operation soapAction="http://tempuri.org/GetBuildLog" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRevisionByRevision">
+      <soap:operation soapAction="http://tempuri.org/GetRevisionByRevision" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -254,6 +287,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetBuildLog">
       <soap12:operation soapAction="http://tempuri.org/GetBuildLog" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRevisionByRevision">
+      <soap12:operation soapAction="http://tempuri.org/GetRevisionByRevision" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
