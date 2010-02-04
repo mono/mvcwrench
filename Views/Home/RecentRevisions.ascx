@@ -5,7 +5,7 @@
             <div class="human" style="width: 100%">
                 <div class="revision">
                   Revision <%= item.RevisionNumber %><br />
-                  <div style="text-align: right"><table style="margin-left: 29px;"><tr><td><a href="<%= Html.ResolveUrl (string.Format ("~/builds/mono/{0}", item.RevisionNumber)) %>"><img src="<%= Html.ResolveUrl ("~/Media/diff.png") %>" alt="View Diff" /></a></td><td><a href="<%= Html.ResolveUrl (string.Format ("~/builds/mono/{0}", Model.RevisionNumber)) %>" style="font-weight: normal;">View Diff</a></td></tr></table></div>
+                  <div style="text-align: right"><table style="margin-left: 29px;"><tr><td><a href="<%= Html.ResolveUrl (string.Format ("~/builds/mono/{0}", item.RevisionNumber)) %>"><img src="<%= Html.ResolveUrl ("~/Media/diff.png") %>" alt="View Diff" /></a></td><td><a href="<%= Html.ResolveUrl (string.Format ("~/builds/mono/{0}", item.RevisionNumber)) %>" style="font-weight: normal;">View Diff</a></td></tr></table></div>
                 </div>
                 <div class="actor">
                     <div class="gravatar">
