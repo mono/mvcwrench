@@ -35,6 +35,20 @@ namespace MvcWrench.Controllers
 {
 	public abstract class ApplicationController : Controller
 	{
+		private User current_user;
+
+		protected override void OnActionExecuting (ActionExecutingContext filterContext)
+		{
+			if (User.Identity.IsAuthenticated) {
+				User user = UserRepository.GetUser (User.Identity.Name);
+				current_user = user;
+				
+				ViewData["CurrentUser"] = current_user;
+			}
+			
+			base.OnActionExecuting (filterContext);
+		}
+		
 		protected override void OnActionExecuted (ActionExecutedContext filterContext)
 		{
 			List<Tab> tabs = new List<Tab> ();
@@ -47,6 +61,8 @@ namespace MvcWrench.Controllers
 
 			base.OnActionExecuted (filterContext);
 		}
+		
+		public User CurrentUser { get { return current_user; } }
 	}
 
 }

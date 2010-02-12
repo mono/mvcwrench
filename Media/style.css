@@ -34,6 +34,12 @@ pre
     font-size: 10pt;
 }
 
+input
+{
+    font-size: 12pt;
+    margin-top: 5px;
+}
+
 /* Header/Menu */
 #header
 {
@@ -44,6 +50,32 @@ pre
     text-align: right;
     color: White;
     padding-right: 10px;
+}
+
+#logindisplay
+{
+	float: right;
+	margin-right: 10px;
+	margin-top: 13px;
+	text-align: left;
+}
+
+.usertext
+{
+	float: right;
+    margin-left: 5px;
+}
+
+#logindisplay a, #logindisplay a:visited
+{
+    color: #FFFFFF;
+}
+
+.userimage
+{
+	float: left;
+	padding-top: 3px;
+	padding-right: 5px;
 }
 
 #topmenu
@@ -609,4 +641,29 @@ li.row-header { background-image: none; background-color: #FFFFFF; font-weight: 
     font-size: 16px;
     font-weight: bold;
     color: #000000;
+}
+
+/* Log in Page */
+#OIDother {line-height: 36px; margin: 5px 0 0}
+#OIDother .spacer {padding-top: 0}
+#OIDother a {text-indent: -5000px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; margin: 0 6px 0 0; background: url('../Media/signin-novell.png') no-repeat 50% 50%; height: 34px; float: left; border: 1px solid white; opacity: 0.9}
+#OIDother a:hover {background-color: #eff4fa; border-color: #a7c3e1; cursor:pointer;}
+#OIDother a#OIDnovell {width: 96px}
+#OIDother a#OIDgoogle {width: 94px; background-image: url('../Media/signin-google.png')}
+#OIDother a#OIDyahoo {width: 100px; background-image: url('../Media/signin-yahoo.png')}
+.form-text {border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px; background: #fff url('../Media/input-bg.png') center top repeat-x; border: 1px solid #aaa; margin: 1px; padding: 3px; position: relative}
+.form-text:focus {background: #FFF url('../Media/input-bga.png') center top repeat-x; border: 2px solid #729fcf; margin: 0}
+.center
+{
+    height: 300px;
+    width: 600px;
+    margin: auto;
+    padding-top: 25px;
+    text-align: center;
+}
+
+.form-item-info
+{
+    color: #999999;
+    font-size: 8pt;
 }
