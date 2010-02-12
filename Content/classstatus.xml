@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <profiles>
-  <profile name="Mono 4.0 vs .NET 4.0 b2" profile="4.0" reference="4.0" icon="mono.png">
+  <profile name="Mono 4.0 vs .NET 4.0 RC" profile="4.0" reference="4.0" icon="mono.png">
     <assembly>Microsoft.Build.Engine</assembly>
     <assembly>Microsoft.Build.Framework</assembly>
     <assembly>Microsoft.CSharp</assembly>
@@ -44,6 +44,7 @@
     <assembly>System.Web.Services</assembly>
     <assembly>System.Windows.Forms</assembly>
     <assembly>System.Windows.Forms.DataVisualization</assembly>
+    <assembly>System.Xml</assembly>
     <assembly>System.Xml.Linq</assembly>
     <assembly>WindowsBase</assembly>
   </profile>
