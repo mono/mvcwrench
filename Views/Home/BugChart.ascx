@@ -1,7 +1,7 @@
 <%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl" %>
 
 <div class="bugchart">
-<div class="bugtitle"><a href="http://www.mono-project.com/Bugs">Open Mono Bugs - Last 7 Days</a></div>
+<div class="bugtitle"><a href="http://www.mono-project.com/Bugs">Open Mono Bugs - Last 14 Days</a></div>
 <img style="margin-top:10px;" src="http://chart.apis.google.com/chart?
 chs=300x175
 &amp;chd=t:<%= (string)Model %>
@@ -10,7 +10,7 @@ chs=300x175
 &amp;chm=b,E9F2FF,0,1,0|B,E2EED7,1,2,0
 &amp;chdl=Bugs|Bugs With Patches
 &amp;chdlp=b"
-alt="Open Mono Bugs - Last 7 Days" />
+alt="Open Mono Bugs - Last 14 Days" />
 <table style="margin-left: 58px; margin-top: 10px;">
     <tr>
         <td><a href="http://mono-project.com/Bugs"><img src="Media/bug_link.png" alt="Bugzilla" /></a></td>

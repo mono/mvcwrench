@@ -44,6 +44,7 @@ namespace MvcWrench
 			// Builds
 			routes.MapRoute ("BuildsMsvcLog", "builds/msvc/{buildrevisionid}/{completedstepid}", new { controller = "Builds", action = "BuildStatusLog", id = "" });
 			routes.MapRoute ("BuildsMonoExtended", "builds/monoextended", new { controller = "Builds", action = "MonoExtended", id = "" });
+			routes.MapRoute ("BuildsMonoDevelop", "builds/monodevelop", new { controller = "Builds", action = "MonoDevelop", id = "" });
 			routes.MapRoute ("BuildsOther", "builds/other", new { controller = "Builds", action = "Other", id = "" });
 			routes.MapRoute ("BuildsMonoRevision", "builds/{project}/{platform}/{revision}", new { controller = "Builds", action = "RevisionDetails", id = "" });
 			routes.MapRoute ("BuildsMsvc", "builds/msvc/{buildrevisionid}", new { controller = "Builds", action = "BuildStatus", id = "" });
@@ -55,6 +56,13 @@ namespace MvcWrench
 			routes.MapRoute ("StatusDisplay", "status/{profile}/{reference}/{assembly}", new { controller = "Status", action = "Class" });
 			routes.MapRoute ("StatusList", "status/{profile}/{reference}", new { controller = "Status", action = "List" });
 			routes.MapRoute ("Status", "status", new { controller = "Status", action = "Index" });
+
+			// Bugs
+			routes.MapRoute ("addtestcase", "bugs/view/{id}/addtestcase", new { controller = "Bugs", action = "AddTestCase" });
+			
+			
+			routes.MapRoute ("User", "user/{action}", new { controller = "User", action = "Index" });
+			routes.MapRoute ("UserID", "user/{action}/{id}", new { controller = "User", action = "Index" });
 			
 			routes.MapRoute (
 			    "Default",                                              // Route name

@@ -226,5 +226,29 @@ namespace MvcWrench.Models
 
 			return roles;
 		}
+		
+		public static Dictionary<string, string> GetSvnGravatars ()
+		{
+			NpgsqlConnection conn = new NpgsqlConnection (conn_string);
+			NpgsqlCommand comm = conn.CreateCommand ();
+
+			string sql = "SELECT svn, gravatar FROM users WHERE svn <> '' AND gravatar <> ''";
+			comm.CommandText = sql;
+
+			conn.Open ();
+
+			NpgsqlDataReader reader = comm.ExecuteReader ();
+
+			Dictionary<string, string> gravatars = new Dictionary<string,string> ();
+
+			while (reader.Read ())
+				gravatars.Add ((string)reader["svn"], (string)reader["gravatar"]);
+
+			reader.Close ();
+			comm.Dispose ();
+			conn.Close ();
+
+			return gravatars;
+		}
 	}
 }

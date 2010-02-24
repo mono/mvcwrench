@@ -9,7 +9,7 @@
                 </div>
                 <div class="actor">
                     <div class="gravatar">
-                        <img alt="" src="<%= MvcWrench.UserHelpers.EmailToGravatar (MvcWrench.Models.SvnGravatars.GetInstance (Server.MapPath ("~/Content/gravatars.txt")).Get (item.Author), 30) %>" />
+                        <img alt="" src="<%= MvcWrench.UserHelpers.EmailToGravatar (MvcWrench.Models.SvnGravatars.Get (item.Author), 30) %>" />
                     </div>
                     <div class="name"><%= item.Author %></div>
                     <div class="date">about <%= (DateTime.Now.Subtract (new TimeSpan (1, 0, 0)) - item.Time).ToFriendlySpan () %> ago</div>

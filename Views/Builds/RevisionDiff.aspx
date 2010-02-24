@@ -6,6 +6,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="right_content_placeholder" runat="server">
 <div class="right-content-pad">
+<% if (Model != null) { %>
     <div id="commit">
             <div class="human" style="width: 100%">
                 <div class="revision">
@@ -13,7 +14,7 @@
                 </div>
                 <div class="actor">
                     <div class="gravatar">
-                        <img alt="" src="<%= MvcWrench.UserHelpers.EmailToGravatar (MvcWrench.Models.SvnGravatars.GetInstance (Server.MapPath ("~/Content/gravatars.txt")).Get (Model.Author), 30) %>" />
+                        <img alt="" src="<%= MvcWrench.UserHelpers.EmailToGravatar (MvcWrench.Models.SvnGravatars.Get (Model.Author), 30) %>" />
                     </div>
                     <div class="name"><%= Model.Author %></div>
                     <div class="date">about <%= (DateTime.Now.Subtract (new TimeSpan (1, 0, 0)) - Model.Time).ToFriendlySpan ()%> ago</div>
@@ -21,7 +22,7 @@
                <pre><%= Html.Encode (Model.SvnLog.TrimEnd ())%></pre>
             </div>
         </div>
-        
+<% } %>
 <% if ((ViewData["Diff"]).GetType () == typeof(string)) { %>
 <br /><%= ViewData["Diff"] %>
 <% } else { %>

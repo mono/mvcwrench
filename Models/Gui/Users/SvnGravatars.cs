@@ -32,39 +32,18 @@ using System.IO;
 
 namespace MvcWrench.Models
 {
-	public class SvnGravatars
+	public static class SvnGravatars
 	{
-		private static SvnGravatars instance;
+		private static Dictionary<string, string> gravatars;
+		private static DateTime retrieved;
 		
-		private Dictionary<string, string> gravatars;
-
-		public SvnGravatars ()
+		public static string Get (string svnuser)
 		{
-			gravatars = new Dictionary<string, string> ();
-		}
-
-		public static SvnGravatars GetInstance (string source)
-		{
-			if (instance == null) {
-				SvnGravatars grav = new SvnGravatars ();
-
-				using (StreamReader sr = new StreamReader (source)) {
-					string line;
-					
-					while ((line = sr.ReadLine ()) != null) {
-						string[] pieces = line.Split (',');
-						grav.gravatars.Add (pieces[0], pieces[1]);
-					}
-				}
-
-				instance = grav;
+			if (gravatars == null || DateTime.Now.Subtract (retrieved).TotalMinutes > 10) {
+				gravatars = UserRepository.GetSvnGravatars ();
+				retrieved = DateTime.Now;
 			}
-			
-			return instance;
-		}
-		
-		public string Get (string svnuser)
-		{
+				
 			if (gravatars.ContainsKey (svnuser))
 				return gravatars[svnuser];
 				

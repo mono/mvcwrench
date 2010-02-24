@@ -218,6 +218,28 @@ namespace MvcWrench.Controllers
 			return View ("Index", strips);
 		}
 
+		// GET: /Builds/monodevelop
+		public ActionResult MonoDevelop ()
+		{
+			WebServices ws = new WebServices ();
+			WebServiceLogin login = new WebServiceLogin ();
+
+			FrontPageResponse data = ws.GetFrontPageData2 (login, 10, null, null);
+
+			List<StatusStrip> strips = new List<StatusStrip> ();
+
+			StatusStrip strip_md = new StatusStrip ();
+			strip_md.Name = "MonoDevelop - Trunk";
+			//strip_md.Rows.Add (MonkeyWrenchHelper.GetRow (49, data, "dist"));
+			strip_md.Rows.Add (MonkeyWrenchHelper.GetRow (131, data, "sle-11-i586"));
+
+			strips.Add (strip_md);
+
+			ViewData["PageTitle"] = "MonkeyWrench - MonoDevelop";
+
+			return View ("Index", strips);
+		}
+
 		// GET: /Builds/other
 		public ActionResult Other ()
 		{
@@ -354,7 +376,7 @@ namespace MvcWrench.Controllers
 			commit.Builder = data.WorkHost == null ? "" : data.WorkHost.host;
 			commit.BuildDuration = TimeSpan.Zero;
 			commit.CommitLog = "";
-			commit.Email = SvnGravatars.GetInstance (Server.MapPath ("~/Content/gravatars.txt")).Get (commit.Author);
+			commit.Email = SvnGravatars.Get (commit.Author);
 			
 			// Download the commit log to add
 			string url = string.Format ("http://build.mono-project.com/GetRevisionLog.aspx?id={0}", data.Revision.id);
@@ -412,9 +434,9 @@ namespace MvcWrench.Controllers
 			MonkeyWrench.Public.Public ws2 = new Public ();
 			Revision r = ws2.GetRevisionByRevision (int.Parse (revision));
 
-			ViewData["PageTitle"] = string.Format ("MonkeyWrench - Revision {0}", r.RevisionNumber);
+			ViewData["PageTitle"] = string.Format ("MonkeyWrench - Revision {0}", revision);
 
-			if (string.IsNullOrEmpty (r.FileDiff))
+			if (r == null || string.IsNullOrEmpty (r.FileDiff))
 				ViewData["Diff"] = "Diff not available";
 			else {
 				try {
@@ -579,6 +601,7 @@ namespace MvcWrench.Controllers
 
 			tv.Nodes.Add (new TreeViewNode ("Mono", "~/builds/mono", "~/Media/mono.png"));
 			tv.Nodes.Add (new TreeViewNode ("Mono - Extended", "~/builds/monoextended", "~/Media/mono.png"));
+			tv.Nodes.Add (new TreeViewNode ("MonoDevelop", "~/builds/monodevelop", "~/Media/monodevelop.png"));
 			tv.Nodes.Add (new TreeViewNode ("Other Projects", "~/builds/other", "~/Media/bricks.png"));
 
 			return tv;

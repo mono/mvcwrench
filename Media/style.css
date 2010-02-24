@@ -32,6 +32,11 @@ a:hover
 pre
 {
     font-size: 10pt;
+     white-space: pre-wrap;       /* css-3 */
+     white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+     white-space: -pre-wrap;      /* Opera 4-6 */
+     white-space: -o-pre-wrap;    /* Opera 7 */
+     word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
 input
@@ -109,10 +114,12 @@ input
     background-color: #326A9A;
 }
 
-#topmenu a
+#topmenu li a
 {
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
     display: block;
-    padding: 6px 10px 0px 10px;
+    padding: 6px 10px 0px 32px;
     font-weight: bold;
     color: #FFF;
 }
@@ -120,11 +127,6 @@ input
 #topmenu a:hover
 {
     text-decoration: none;
-}
-
-#topmenu a img
-{
-    margin: 0px 7px 0px 0px;
 }
 
 /* Main Content */
@@ -666,4 +668,42 @@ li.row-header { background-image: none; background-color: #FFFFFF; font-weight: 
 {
     color: #999999;
     font-size: 8pt;
+}
+
+.th-select
+{
+    background-color: #EAEAEA;
+    border: solid 1px #EAEAEA;
+    font-size: 12px;  
+    width: 100%; 
+}
+
+#build-steps a
+{
+    color: #696969;
+}
+
+a.withimg
+{
+    background-position: 5px center;
+    background-repeat: no-repeat;
+    padding: 5px 5px 5px 25px;
+}
+
+td.test-case
+{
+    width: 50px;
+    text-align: center;
+    color: #000000;
+}
+
+td.fail        { background-color: #F36868; }
+td.testfail    { background-color: #FFCC66; }
+td.executing   { background-color: #FFF095; }
+td.success     { background-color: #A5E368; }
+td.queued      { border: solid 1px #cccccc; }
+
+.monospace
+{
+    font-family: Monaco,Consolas,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace;
 }

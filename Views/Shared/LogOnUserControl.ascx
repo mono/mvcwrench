@@ -15,7 +15,7 @@
 <%
     } else {
 %>
-<%= Html.ActionLink("Sign in / Create account", "login", "user") %>
-<%
+<%--<%= Html.ActionLink("Sign in / Create account", "login", "user") %>
+--%><%
     }
 %>
