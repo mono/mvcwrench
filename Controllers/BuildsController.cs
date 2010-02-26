@@ -233,6 +233,17 @@ namespace MvcWrench.Controllers
 			//strip_md.Rows.Add (MonkeyWrenchHelper.GetRow (49, data, "dist"));
 			strip_md.Rows.Add (MonkeyWrenchHelper.GetRow (131, data, "sle-11-i586"));
 
+			string new_rev_link = "~/builds/{0}/{1}/{2}";
+
+			foreach (var row in strip_md.Rows) {
+				foreach (var cell in row.Cells) {
+					if (cell.IsHeader)
+						continue;
+
+					cell.Url = string.Format (new_rev_link, "monodevelop", row.HeaderText.Replace (": ", "-"), cell.Text.TrimStart ('r'));
+				}
+			}
+
 			strips.Add (strip_md);
 
 			ViewData["PageTitle"] = "MonkeyWrench - MonoDevelop";
@@ -377,6 +388,7 @@ namespace MvcWrench.Controllers
 			commit.BuildDuration = TimeSpan.Zero;
 			commit.CommitLog = "";
 			commit.Email = SvnGravatars.Get (commit.Author);
+			commit.ProjectLinkName = project;
 			
 			// Download the commit log to add
 			string url = string.Format ("http://build.mono-project.com/GetRevisionLog.aspx?id={0}", data.Revision.id);
@@ -581,6 +593,10 @@ namespace MvcWrench.Controllers
 				case "mono24|macos-10.4-ppc":
 					lane = 60;
 					host = 5;
+					return true;
+				case "monodevelop|sle-11-i586":
+					lane = 75;
+					host = 23;
 					return true;
 			}
 			

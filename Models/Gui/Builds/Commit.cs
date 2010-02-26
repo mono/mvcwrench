@@ -17,6 +17,7 @@ namespace MvcWrench.Models
 		public string CommitLog { get; set; }
 		public string Email { get; set; }
 		public int CompletionStatus { get; set; }
+		public string ProjectLinkName { get; set; }
 		
 		public string StatusText {
 			get {

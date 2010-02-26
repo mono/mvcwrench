@@ -9,7 +9,7 @@
                     <div class="date"><%= Model.CommitTime.ToString () %></div>
                 </div>
                <pre><%= Model.CommitLog %></pre>
-               <table><tr><td><a href="<%= Html.ResolveUrl (string.Format ("~/builds/mono/{0}", Model.Revision)) %>"><img src="<%= Html.ResolveUrl ("~/Media/diff.png") %>" alt="View Diff" /></a></td><td><a href="<%= Html.ResolveUrl (string.Format ("~/builds/mono/{0}", Model.Revision)) %>" style="font-weight: normal;">View Diff</a></td></tr></table>
+               <table><tr><td><a href="<%= Html.ResolveUrl (string.Format ("~/builds/{1}/{0}", Model.Revision, Model.ProjectLinkName)) %>"><img src="<%= Html.ResolveUrl ("~/Media/diff.png") %>" alt="View Diff" /></a></td><td><a href="<%= Html.ResolveUrl (string.Format ("~/builds/{1}/{0}", Model.Revision, Model.ProjectLinkName)) %>" style="font-weight: normal;">View Diff</a></td></tr></table>
             </div>
             <div class="machine">
                 Revision: <%= Model.Revision %><br />
