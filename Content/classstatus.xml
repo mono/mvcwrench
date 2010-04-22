@@ -4,7 +4,7 @@
     <assembly>Microsoft.Build.Engine</assembly>
     <assembly>Microsoft.Build.Framework</assembly>
     <assembly>Microsoft.Build.Tasks.v4.0</assembly>
-    <assembly>Microsoft.Build.Framework.v4.0</assembly>
+    <assembly>Microsoft.Build.Utilities.v4.0</assembly>
     <assembly>Microsoft.CSharp</assembly>
     <assembly>Microsoft.JScript</assembly>
     <assembly>mscorlib</assembly>
