@@ -58,8 +58,6 @@ namespace MvcWrench.Controllers
 			strip.Rows.Add (MonkeyWrenchHelper.GetRow (110, data));
 			strip.Rows.Add (MonkeyWrenchHelper.GetRow (117, data));
 			strip.Rows.Add (MonkeyWrenchHelper.GetRow (66, data));
-			strip.Rows.Add (MonkeyWrenchHelper.GetRow (74, data, "eglib: sle-11-i586"));
-			strip.Rows.Add (MonkeyWrenchHelper.GetRow (21, data, "eglib: sle-11-x64"));
 
 			StatusStrip strip26 = new StatusStrip ();
 			strip26.Name = "Mono - 2.6 Branch";
@@ -156,11 +154,6 @@ namespace MvcWrench.Controllers
 			strip_trunk.Rows.Add (MonkeyWrenchHelper.GetRow (41, data));
 			strip_trunk.Rows.Add (MonkeyWrenchHelper.GetRow (84, data));
 
-			StatusStrip strip_eglib = new StatusStrip ();
-			strip_eglib.Name = "Mono - Trunk - eglib";
-			strip_eglib.Rows.Add (MonkeyWrenchHelper.GetRow (74, data));
-			strip_eglib.Rows.Add (MonkeyWrenchHelper.GetRow (21, data));
-
 			StatusStrip strip_rpm = new StatusStrip ();
 			strip_rpm.Name = "Mono - Trunk - rpm";
 			strip_rpm.Rows.Add (MonkeyWrenchHelper.GetRow (39, data));
@@ -206,7 +199,6 @@ namespace MvcWrench.Controllers
 
 			strips.Add (strip_trunk_dist);
 			strips.Add (strip_trunk);
-			strips.Add (strip_eglib);
 			strips.Add (strip_rpm);
 			strips.Add (strip_40);
 			strips.Add (strip_26);
