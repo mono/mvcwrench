@@ -56,8 +56,8 @@ namespace MvcWrench.Controllers
 			strip.Rows.Add (MonkeyWrenchHelper.GetRow (41, data));
 			strip.Rows.Add (MonkeyWrenchHelper.GetRow (111, data));
 			strip.Rows.Add (MonkeyWrenchHelper.GetRow (110, data));
-			strip.Rows.Add (MonkeyWrenchHelper.GetRow (117, data));
-			strip.Rows.Add (MonkeyWrenchHelper.GetRow (66, data));
+			strip.Rows.Add (MonkeyWrenchHelper.GetRow (128, data));
+			strip.Rows.Add (MonkeyWrenchHelper.GetRow (129, data));
 
 			StatusStrip strip26 = new StatusStrip ();
 			strip26.Name = "Mono - 2.6 Branch";
@@ -136,10 +136,8 @@ namespace MvcWrench.Controllers
 			StatusStrip strip_trunk_dist = new StatusStrip ();
 			strip_trunk_dist.Name = "Mono - Trunk - Dist";
 			strip_trunk_dist.Rows.Add (MonkeyWrenchHelper.GetRow (14, data));
-			strip_trunk_dist.Rows.Add (MonkeyWrenchHelper.GetRow (66, data));
 			strip_trunk_dist.Rows.Add (MonkeyWrenchHelper.GetRow (110, data));
 			strip_trunk_dist.Rows.Add (MonkeyWrenchHelper.GetRow (111, data));
-			strip_trunk_dist.Rows.Add (MonkeyWrenchHelper.GetRow (117, data));
 			strip_trunk_dist.Rows.Add (MonkeyWrenchHelper.GetRow (128, data));
 			strip_trunk_dist.Rows.Add (MonkeyWrenchHelper.GetRow (129, data));
 
