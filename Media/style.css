@@ -435,6 +435,98 @@ li.row-header { background-image: none; background-color: #FFFFFF; font-weight: 
 }
 
 /* Commit Header */
+.commit
+{
+    overflow: hidden;
+    border: 1px solid #CCCCCC;
+    padding: 0;
+    margin: 10px 0 10px 10px;
+    background-color: #FCFCFC;
+	-moz-border-radius: 3px;
+}
+
+.commit table.wrapper
+{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.commit table.wrapper tr td
+{
+    padding: 0;
+    margin: 0;
+}
+
+.commit table.wrapper tr td.header
+{
+    vertical-align: top;
+    background-color: #E9F2FF;
+    border-right: 1px solid #CCCCCC;
+    height: 72px;
+    width: 140px;
+}
+
+.commit .human
+{
+    background-color: #E9F2FF;
+    padding-top: .7em;
+    padding: .7em 0 0em .7em;
+    width: 130px;
+}
+
+.commit .human .revision
+{
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.commit .human .actor
+{
+    clear: left;
+    margin-bottom: 2px;
+}
+
+.commit .human .actor .gravatar
+{
+    height: 30px;
+    width: 30px;
+    border: 1px solid #d0d0d0;
+    padding: 2px;
+    background-color: white;
+    float: left;
+    margin-right: .5em;
+	-moz-border-radius: 3px;
+}
+
+.commit .human .actor .name
+{
+    line-height: 18px;
+    font-size: 13px;
+}
+
+.commit .human .actor .date
+{
+    color: #888;
+    line-height: 15px;
+    font-size: 12px;
+}
+
+.commit .diff
+{
+    font-size: 13px;
+    font-weight: bold;
+    float: right;
+    margin: 0 3px 0;
+}
+
+.commit pre
+{
+    font-family: Monaco, Consolas,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace;
+    padding-left: 10px;
+}
+
+/* Commit Header */
 #commit
 {
     overflow: hidden;
@@ -707,3 +799,26 @@ td.queued      { border: solid 1px #cccccc; }
 {
     font-family: Monaco,Consolas,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace;
 }
+
+/* Class Status Page - Completed Graphs  */
+div.progress-container
+{
+  border: 1px solid #ccc; 
+  width: 500px; 
+  margin: 2px 5px 2px 5px; 
+  padding: 1px; 
+  float: left; 
+  background: white;
+}
+
+div.progress-container div
+{
+  height: 12px;
+  float: left;
+}
+
+div.progress-container > div.complete { background-color: #A5E368; }
+div.progress-container > div.missing { background-color: #F36868; }
+div.progress-container > div.todo { background-color: #C0DEED; }
+div.progress-container > div.niex { background-color: #FFF095; }
+div.progress-container > div.error { background-color: #FFCC66; }
