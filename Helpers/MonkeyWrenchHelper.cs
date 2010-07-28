@@ -58,11 +58,20 @@ namespace MvcWrench
 		
 		public static StatusStripRow GetRow (int hostlane, FrontPageResponse data, string header)
 		{
-			StatusStripRow row = new StatusStripRow ();
+			DBHostLane dbhostlane;
+			DBLane dblane;
+			DBHost dbhost;
+
 			try {
-			DBHostLane dbhostlane = data.HostLanes.Where (p => p.id == hostlane).FirstOrDefault ();
-			DBLane dblane = data.Lanes.Where (p => p.id == dbhostlane.lane_id).FirstOrDefault ();
-			DBHost dbhost = data.Hosts.Where (p => p.id == dbhostlane.host_id).FirstOrDefault ();
+				dbhostlane = data.HostLanes.Where (p => p.id == hostlane).FirstOrDefault ();
+				dblane = data.Lanes.Where (p => p.id == dbhostlane.lane_id).FirstOrDefault ();
+				dbhost = data.Hosts.Where (p => p.id == dbhostlane.host_id).FirstOrDefault ();
+			} catch {
+				// This generally means we couldn't find the host/lane
+				return null;
+			}
+			
+			StatusStripRow row = new StatusStripRow ();
 			
 			int index = data.RevisionWorkHostLaneRelation.ToList ().IndexOf (dbhostlane.id);
 			
@@ -74,8 +83,8 @@ namespace MvcWrench
 				cell.Text = r.revision;
 				cell.Status = ConvertState (r.state);
 
-                if ((r.state == 3 || r.state == 8) && !r.completed)
-                    cell.Status = 1;
+				if ((r.state == 3 || r.state == 8) && !r.completed)
+					cell.Status = 1;
 
 				cell.Url = string.Format (rev_link, dblane.id, dbhost.id, r.revision_id);
 				
@@ -93,9 +102,6 @@ namespace MvcWrench
 				row.Cells.Add ((new StatusStripCell () { Text = string.Empty, Status = 0 }));
 
 			return row;
-			} catch {
-				throw new Exception (string.Format ("Hostlane {0} no longer exists", hostlane));
-			}
 		}
 		
 		public static StatusStripRow GetRow (BuildRevision[] revs)

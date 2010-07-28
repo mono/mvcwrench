@@ -37,6 +37,11 @@ namespace MvcWrench.Models
 		{
 			Rows = new List<StatusStripRow> ();
 		}
+
+		public StatusStrip (string name) : this ()
+		{
+			Name = name;
+		}
 	}
 	
 	public class StatusStripRow

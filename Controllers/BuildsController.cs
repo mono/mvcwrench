@@ -40,8 +40,10 @@ namespace MvcWrench.Controllers
 		// GET: /Builds/Official
 		public ActionResult Index ()
 		{
-			string new_rev_link = "~/builds/{0}/{1}/{2}";
-
+			int[] trunk_rows = new int[] { 14, 41, 111, 110, 128, 129 };
+			int[] mono26_rows = new int[] { 75, 100, 98, 122, 163, 164 };
+			int[] mono24_rows = new int[] { 94, 101, 96, 123, 119, 120 };
+			
 			WebServices ws = new WebServices ();
 			WebServiceLogin login = new WebServiceLogin ();
 
@@ -50,70 +52,23 @@ namespace MvcWrench.Controllers
 			TimeSpan data_elapsed = DateTime.Now - start;
 			
 			List<StatusStrip> strips = new List<StatusStrip> ();
-			StatusStrip strip = new StatusStrip ();
+			
+			StatusStrip strip = new StatusStrip ("Mono - Trunk");
+			AddRowsToStrip (strip, "mono", trunk_rows, data);
+			
+			StatusStrip strip26 = new StatusStrip ("Mono - 2.6 Branch");
+			AddRowsToStrip (strip26, "mono26", mono26_rows, data);
 
-			strip.Name = "Mono - Trunk";
-
-			strip.Rows.Add (MonkeyWrenchHelper.GetRow (14, data));
-			strip.Rows.Add (MonkeyWrenchHelper.GetRow (41, data));
-			strip.Rows.Add (MonkeyWrenchHelper.GetRow (111, data));
-			strip.Rows.Add (MonkeyWrenchHelper.GetRow (110, data));
-			strip.Rows.Add (MonkeyWrenchHelper.GetRow (128, data));
-			strip.Rows.Add (MonkeyWrenchHelper.GetRow (129, data));
-
-			StatusStrip strip26 = new StatusStrip ();
-			strip26.Name = "Mono - 2.6 Branch";
-			strip26.Rows.Add (MonkeyWrenchHelper.GetRow (75, data));
-			strip26.Rows.Add (MonkeyWrenchHelper.GetRow (100, data));
-			strip26.Rows.Add (MonkeyWrenchHelper.GetRow (98, data));
-			strip26.Rows.Add (MonkeyWrenchHelper.GetRow (122, data));
-			strip26.Rows.Add (MonkeyWrenchHelper.GetRow (163, data));
-			strip26.Rows.Add (MonkeyWrenchHelper.GetRow (164, data));
-
-			StatusStrip strip24 = new StatusStrip ();
-			strip24.Name = "Mono - 2.4 Branch";
-			strip24.Rows.Add (MonkeyWrenchHelper.GetRow (94, data));
-			strip24.Rows.Add (MonkeyWrenchHelper.GetRow (101, data));
-			strip24.Rows.Add (MonkeyWrenchHelper.GetRow (96, data));
-			strip24.Rows.Add (MonkeyWrenchHelper.GetRow (123, data));
-			strip24.Rows.Add (MonkeyWrenchHelper.GetRow (119, data));
-			strip24.Rows.Add (MonkeyWrenchHelper.GetRow (120, data));
+			StatusStrip strip24 = new StatusStrip ("Mono - 2.4 Branch");
+			AddRowsToStrip (strip24, "mono24", mono24_rows, data);
 
 			strips.Add (strip);
 			strips.Add (strip26);
 			strips.Add (strip24);
 
-			foreach (var row in strip.Rows) {
-				foreach (var cell in row.Cells) {
-					if (cell.IsHeader || cell.Text == "msvc: windows")
-						continue;
-
-					cell.Url = string.Format (new_rev_link, "mono", row.HeaderText.Replace (": ", "-"), cell.Text.TrimStart ('r'));
-					cell.Text = Utilities.FormatRevision (cell.Text);
-				}
-			}
-
-			foreach (var row in strip26.Rows) {
-				foreach (var cell in row.Cells) {
-					if (cell.IsHeader)
-						continue;
-
-					cell.Url = string.Format (new_rev_link, "mono26", row.HeaderText.Replace (": ", "-"), cell.Text.TrimStart ('r'));
-					cell.Text = Utilities.FormatRevision (cell.Text);
-				}
-			}
-
-			foreach (var row in strip24.Rows) {
-				foreach (var cell in row.Cells) {
-					if (cell.IsHeader)
-						continue;
-
-					cell.Url = string.Format (new_rev_link, "mono24", row.HeaderText.Replace (": ", "-"), cell.Text.TrimStart ('r'));
-					cell.Text = Utilities.FormatRevision (cell.Text);
-				}
-			}
-
-			start = DateTime.Now;
+			// This adds the MSVC build to the page.
+			// Disabled because the MSVC build doesn't support Git
+			//start = DateTime.Now;
 			//try {
 			//        MonkeyWrench.Public.Public ws2 = new MvcWrench.MonkeyWrench.Public.Public ();
 			//        var msvc = ws2.GetRecentData ("msvc");
@@ -123,11 +78,11 @@ namespace MvcWrench.Controllers
 			//} catch {
 			//        // Carry on even if this fails
 			//}
-			TimeSpan remote_elapsed = DateTime.Now - start;
+			//TimeSpan remote_elapsed = DateTime.Now - start;
+			//ViewData["MsvcElapsed"] = remote_elapsed;
 			
 			ViewData["PageTitle"] = "MonkeyWrench - Mono Build Overview";
 			ViewData["MonkeyWrenchElapsed"] = data_elapsed;
-			ViewData["MsvcElapsed"] = remote_elapsed;
 
 			return View ("Index", strips);
 		}
@@ -135,6 +90,15 @@ namespace MvcWrench.Controllers
 		// GET: /Builds/monoextended
 		public ActionResult MonoExtended ()
 		{
+			int[] trunk_dist_rows = new int[] { 14, 110, 111, 128, 129 };
+			int[] trunk_rows = new int[] { 34, 35, 36, 37, 31, 41, 84 };
+			int[] trunk_rpm_rows = new int[] { 39 };
+			int[] trunk_40_rows = new int[] { 58 };
+			int[] trunk_minimal_rows = new int[] { 38 };
+			int[] mono_26_rows = new int[] { 75, 99, 98, 100, 116, 163, 164, 122, 125, 126 };
+			int[] mono_26_rpm_rows = new int[] { 112 };
+			int[] mono_243_rows = new int[] { 102, 94, 101, 96, 123, 119, 120, 97, 115, 124, 127 };
+
 			WebServices ws = new WebServices ();
 			WebServiceLogin login = new WebServiceLogin ();
 
@@ -142,67 +106,29 @@ namespace MvcWrench.Controllers
 
 			List<StatusStrip> strips = new List<StatusStrip> ();
 
-			StatusStrip strip_trunk_dist = new StatusStrip ();
-			strip_trunk_dist.Name = "Mono - Trunk - Dist";
-			strip_trunk_dist.Rows.Add (MonkeyWrenchHelper.GetRow (14, data));
-			strip_trunk_dist.Rows.Add (MonkeyWrenchHelper.GetRow (110, data));
-			strip_trunk_dist.Rows.Add (MonkeyWrenchHelper.GetRow (111, data));
-			strip_trunk_dist.Rows.Add (MonkeyWrenchHelper.GetRow (128, data));
-			strip_trunk_dist.Rows.Add (MonkeyWrenchHelper.GetRow (129, data));
+			StatusStrip strip_trunk_dist = new StatusStrip ("Mono - Trunk - Dist");
+			AddRowsToStrip (strip_trunk_dist, null, trunk_dist_rows, data);
 
-			StatusStrip strip_trunk = new StatusStrip ();
-			strip_trunk.Name = "Mono - Trunk";
-			//strip_trunk.Rows.Add (MonkeyWrenchHelper.GetRow (73, data));
-			strip_trunk.Rows.Add (MonkeyWrenchHelper.GetRow (34, data));
-			strip_trunk.Rows.Add (MonkeyWrenchHelper.GetRow (35, data));
-			strip_trunk.Rows.Add (MonkeyWrenchHelper.GetRow (36, data));
-			strip_trunk.Rows.Add (MonkeyWrenchHelper.GetRow (37, data));
-			strip_trunk.Rows.Add (MonkeyWrenchHelper.GetRow (31, data));
-			strip_trunk.Rows.Add (MonkeyWrenchHelper.GetRow (41, data));
-			strip_trunk.Rows.Add (MonkeyWrenchHelper.GetRow (84, data));
+			StatusStrip strip_trunk = new StatusStrip ("Mono - Trunk");
+			AddRowsToStrip (strip_trunk, null, trunk_rows, data);
 
-			StatusStrip strip_rpm = new StatusStrip ();
-			strip_rpm.Name = "Mono - Trunk - rpm";
-			strip_rpm.Rows.Add (MonkeyWrenchHelper.GetRow (39, data));
+			StatusStrip strip_rpm = new StatusStrip ("Mono - Trunk - rpm");
+			AddRowsToStrip (strip_rpm, null, trunk_rpm_rows, data);
 
-			StatusStrip strip_40 = new StatusStrip ();
-			strip_40.Name = "Mono - Trunk - 4.0";
-			strip_40.Rows.Add (MonkeyWrenchHelper.GetRow (58, data));
+			StatusStrip strip_40 = new StatusStrip ("Mono - Trunk - 4.0");
+			AddRowsToStrip (strip_40, null, trunk_40_rows, data);
 
-			StatusStrip strip_trunk_min = new StatusStrip ();
-			strip_trunk_min.Name = "Mono - Trunk - Minimal";
-			strip_trunk_min.Rows.Add (MonkeyWrenchHelper.GetRow (38, data));
+			StatusStrip strip_trunk_min = new StatusStrip ("Mono - Trunk - Minimal");
+			AddRowsToStrip (strip_trunk_min, null, trunk_minimal_rows, data);
 
-			StatusStrip strip_26 = new StatusStrip ();
-			strip_26.Name = "Mono - 2.6";
-			strip_26.Rows.Add (MonkeyWrenchHelper.GetRow (75, data));
-			strip_26.Rows.Add (MonkeyWrenchHelper.GetRow (99, data));
-			strip_26.Rows.Add (MonkeyWrenchHelper.GetRow (98, data));
-			strip_26.Rows.Add (MonkeyWrenchHelper.GetRow (100, data));
-			strip_26.Rows.Add (MonkeyWrenchHelper.GetRow (116, data));
-			strip_26.Rows.Add (MonkeyWrenchHelper.GetRow (163, data));
-			strip_26.Rows.Add (MonkeyWrenchHelper.GetRow (164, data));
-			strip_26.Rows.Add (MonkeyWrenchHelper.GetRow (122, data));
-			strip_26.Rows.Add (MonkeyWrenchHelper.GetRow (125, data));
-			strip_26.Rows.Add (MonkeyWrenchHelper.GetRow (126, data));
+			StatusStrip strip_26 = new StatusStrip ("Mono - 2.6");
+			AddRowsToStrip (strip_26, null, mono_26_rows, data);
 
-			StatusStrip strip_rpm_26 = new StatusStrip ();
-			strip_rpm_26.Name = "Mono - 2.6 - rpm";
-			strip_rpm_26.Rows.Add (MonkeyWrenchHelper.GetRow (112, data));
+			StatusStrip strip_rpm_26 = new StatusStrip ("Mono - 2.6 - rpm");
+			AddRowsToStrip (strip_rpm_26, null, mono_26_rpm_rows, data);
 
-			StatusStrip strip24 = new StatusStrip ();
-			strip24.Name = "Mono - 2.4.3";
-			strip24.Rows.Add (MonkeyWrenchHelper.GetRow (102, data));
-			strip24.Rows.Add (MonkeyWrenchHelper.GetRow (94, data));
-			strip24.Rows.Add (MonkeyWrenchHelper.GetRow (101, data));
-			strip24.Rows.Add (MonkeyWrenchHelper.GetRow (96, data));
-			strip24.Rows.Add (MonkeyWrenchHelper.GetRow (123, data));
-			strip24.Rows.Add (MonkeyWrenchHelper.GetRow (119, data));
-			strip24.Rows.Add (MonkeyWrenchHelper.GetRow (120, data));
-			strip24.Rows.Add (MonkeyWrenchHelper.GetRow (97, data));
-			strip24.Rows.Add (MonkeyWrenchHelper.GetRow (115, data));
-			strip24.Rows.Add (MonkeyWrenchHelper.GetRow (124, data));
-			strip24.Rows.Add (MonkeyWrenchHelper.GetRow (127, data));
+			StatusStrip strip24 = new StatusStrip ("Mono - 2.4.3");
+			AddRowsToStrip (strip24, null, mono_243_rows, data);
 
 			strips.Add (strip_trunk_dist);
 			strips.Add (strip_trunk);
@@ -227,23 +153,8 @@ namespace MvcWrench.Controllers
 
 			List<StatusStrip> strips = new List<StatusStrip> ();
 
-			StatusStrip strip_md = new StatusStrip ();
-			strip_md.Name = "MonoDevelop - Trunk";
-			//strip_md.Rows.Add (MonkeyWrenchHelper.GetRow (49, data, "dist"));
-			strip_md.Rows.Add (MonkeyWrenchHelper.GetRow (131, data, "sle-11-i586"));
-
-			string new_rev_link = "~/builds/{0}/{1}/{2}";
-
-			foreach (var row in strip_md.Rows) {
-				foreach (var cell in row.Cells) {
-					if (cell.IsHeader)
-						continue;
-
-					cell.Url = string.Format (new_rev_link, "monodevelop", row.HeaderText.Replace (": ", "-"), cell.Text.TrimStart ('r'));
-					cell.Text = Utilities.FormatRevision (cell.Text);
-				}
-			}
-
+			StatusStrip strip_md = new StatusStrip ("MonoDevelop - Trunk");
+			AddRowsToStrip (strip_md, "monodevelop", new int[] { 131 }, data);
 			strips.Add (strip_md);
 
 			ViewData["PageTitle"] = "MonkeyWrench - MonoDevelop";
@@ -506,6 +417,31 @@ namespace MvcWrench.Controllers
 			//}
 
 			//return View ("RevisionDiff", r);
+		}
+
+		private void AddRowsToStrip (StatusStrip strip, string projectLink, int[] hosts, FrontPageResponse data)
+		{
+			string new_rev_link = "~/builds/{0}/{1}/{2}";
+
+			foreach (int i in hosts) {
+				StatusStripRow row = MonkeyWrenchHelper.GetRow (i, data);
+
+				if (row != null)
+					strip.Rows.Add (row);
+			}
+
+			// Update each cell's link to the wrench URL, not the old MW URL
+			foreach (var row in strip.Rows) {
+				foreach (var cell in row.Cells) {
+					if (cell.IsHeader || cell.Text == "msvc: windows")
+						continue;
+						
+					if (!string.IsNullOrEmpty (projectLink))
+						cell.Url = string.Format (new_rev_link, projectLink, row.HeaderText.Replace (": ", "-"), cell.Text.TrimStart ('r'));
+					
+					cell.Text = Utilities.FormatRevision (cell.Text);
+				}
+			}
 		}
 		
 		private bool FindHostAndLane (string project, string platform, out int host, out int lane)
