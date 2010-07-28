@@ -11,5 +11,10 @@
            <br />
     <% } %>
 </div>
+
+<!--
+    MW_Time: <%= ViewData["MonkeyWrenchElapsed"] %>
+    MSVC_Time: <%= ViewData["MsvcElapsed"] %>
+-->
 </asp:Content>
 
