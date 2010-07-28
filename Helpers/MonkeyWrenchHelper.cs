@@ -59,7 +59,7 @@ namespace MvcWrench
 		public static StatusStripRow GetRow (int hostlane, FrontPageResponse data, string header)
 		{
 			StatusStripRow row = new StatusStripRow ();
-
+			try {
 			DBHostLane dbhostlane = data.HostLanes.Where (p => p.id == hostlane).FirstOrDefault ();
 			DBLane dblane = data.Lanes.Where (p => p.id == dbhostlane.lane_id).FirstOrDefault ();
 			DBHost dbhost = data.Hosts.Where (p => p.id == dbhostlane.host_id).FirstOrDefault ();
@@ -71,7 +71,7 @@ namespace MvcWrench
 
 			foreach (DBRevisionWorkView2 r in revisions) {
 				StatusStripCell cell = new StatusStripCell ();
-				cell.Text = string.Format ("r{0}", r.revision);
+				cell.Text = r.revision;
 				cell.Status = ConvertState (r.state);
 
                 if ((r.state == 3 || r.state == 8) && !r.completed)
@@ -93,6 +93,9 @@ namespace MvcWrench
 				row.Cells.Add ((new StatusStripCell () { Text = string.Empty, Status = 0 }));
 
 			return row;
+			} catch {
+				throw new Exception (string.Format ("Hostlane {0} no longer exists", hostlane));
+			}
 		}
 		
 		public static StatusStripRow GetRow (BuildRevision[] revs)
@@ -102,7 +105,7 @@ namespace MvcWrench
 
 			foreach (var item in revs) {
 				StatusStripCell cell = new StatusStripCell ();
-				cell.Text = string.Format ("r{0}", item.RevisionNumber);
+				cell.Text = string.Format ("{0}", item.RevisionNumber);
 				cell.Status = item.Status;
 
 				cell.Url = string.Format ("~/builds/msvc/{0}", item.Id);
