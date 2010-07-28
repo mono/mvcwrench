@@ -45,6 +45,7 @@
         </tr>
     </table>
     <input type="submit" value="Save" />
+    <div class="form-item-info">Gravatars are cached and may take up to 30 minutes to appear.</div>
     <% } %>
     </div>
 </asp:Content>
