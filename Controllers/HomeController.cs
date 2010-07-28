@@ -68,7 +68,7 @@ namespace MvcWrench.Controllers
 			if (bugcounts == null) {
 				try {
 					MonkeyWrench.Public.Public ws = new MvcWrench.MonkeyWrench.Public.Public ();
-					string[] counts = ws.GetLatestBugCounts (7);
+					string[] counts = ws.GetLatestBugCounts (60);
 					
 					StringBuilder sb = new StringBuilder ();
 
@@ -79,7 +79,7 @@ namespace MvcWrench.Controllers
 					sb.Append ("|");
 
 					foreach (string item in counts)
-						sb.AppendFormat ("{0},", (int)(int.Parse (item.Split (',')[1]) / 25f));
+						sb.AppendFormat ("{0},", (int)(int.Parse(item.Split (',')[1]) / 25f));
 
 					sb.Remove (sb.Length - 1, 1);
 
