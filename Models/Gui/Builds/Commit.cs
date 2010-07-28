@@ -19,6 +19,10 @@ namespace MvcWrench.Models
 		public int CompletionStatus { get; set; }
 		public string ProjectLinkName { get; set; }
 		
+		public string FormattedRevision {
+			get { return Utilities.FormatRevision (Revision); }
+		}
+		
 		public string StatusText {
 			get {
 				switch (CompletionStatus) {
