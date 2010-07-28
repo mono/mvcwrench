@@ -1,0 +1,8 @@
+*.pidb
+*.user
+*.dll
+*.mdb
+*~
+*.suo
+bin/
+obj/
