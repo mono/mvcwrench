@@ -45,8 +45,10 @@ namespace MvcWrench.Controllers
 			WebServices ws = new WebServices ();
 			WebServiceLogin login = new WebServiceLogin ();
 
+			DateTime start = DateTime.Now;
 			FrontPageResponse data = ws.GetFrontPageData2 (login, 10, null, null);
-
+			TimeSpan data_elapsed = DateTime.Now - start;
+			
 			List<StatusStrip> strips = new List<StatusStrip> ();
 			StatusStrip strip = new StatusStrip ();
 
@@ -65,8 +67,8 @@ namespace MvcWrench.Controllers
 			strip26.Rows.Add (MonkeyWrenchHelper.GetRow (100, data));
 			strip26.Rows.Add (MonkeyWrenchHelper.GetRow (98, data));
 			strip26.Rows.Add (MonkeyWrenchHelper.GetRow (122, data));
-			strip26.Rows.Add (MonkeyWrenchHelper.GetRow (118, data));
-			strip26.Rows.Add (MonkeyWrenchHelper.GetRow (121, data));
+			strip26.Rows.Add (MonkeyWrenchHelper.GetRow (163, data));
+			strip26.Rows.Add (MonkeyWrenchHelper.GetRow (164, data));
 
 			StatusStrip strip24 = new StatusStrip ();
 			strip24.Name = "Mono - 2.4 Branch";
@@ -85,8 +87,9 @@ namespace MvcWrench.Controllers
 				foreach (var cell in row.Cells) {
 					if (cell.IsHeader || cell.Text == "msvc: windows")
 						continue;
-						
+
 					cell.Url = string.Format (new_rev_link, "mono", row.HeaderText.Replace (": ", "-"), cell.Text.TrimStart ('r'));
+					cell.Text = Utilities.FormatRevision (cell.Text);
 				}
 			}
 
@@ -96,6 +99,7 @@ namespace MvcWrench.Controllers
 						continue;
 
 					cell.Url = string.Format (new_rev_link, "mono26", row.HeaderText.Replace (": ", "-"), cell.Text.TrimStart ('r'));
+					cell.Text = Utilities.FormatRevision (cell.Text);
 				}
 			}
 
@@ -105,20 +109,25 @@ namespace MvcWrench.Controllers
 						continue;
 
 					cell.Url = string.Format (new_rev_link, "mono24", row.HeaderText.Replace (": ", "-"), cell.Text.TrimStart ('r'));
+					cell.Text = Utilities.FormatRevision (cell.Text);
 				}
 			}
 
-			try {
-				MonkeyWrench.Public.Public ws2 = new MvcWrench.MonkeyWrench.Public.Public ();
-				var msvc = ws2.GetRecentData ("msvc");
+			start = DateTime.Now;
+			//try {
+			//        MonkeyWrench.Public.Public ws2 = new MvcWrench.MonkeyWrench.Public.Public ();
+			//        var msvc = ws2.GetRecentData ("msvc");
 				
-				strip.Rows.Add (MonkeyWrenchHelper.GetRow (msvc));
-				//strip.Rows.Insert (0, MonkeyWrenchHelper.GetHeaderRow (msvc));
-			} catch {
-				// Carry on even if this fails
-			}
+			//        strip.Rows.Add (MonkeyWrenchHelper.GetRow (msvc));
+			//        //strip.Rows.Insert (0, MonkeyWrenchHelper.GetHeaderRow (msvc));
+			//} catch {
+			//        // Carry on even if this fails
+			//}
+			TimeSpan remote_elapsed = DateTime.Now - start;
 			
 			ViewData["PageTitle"] = "MonkeyWrench - Mono Build Overview";
+			ViewData["MonkeyWrenchElapsed"] = data_elapsed;
+			ViewData["MsvcElapsed"] = remote_elapsed;
 
 			return View ("Index", strips);
 		}
@@ -143,7 +152,7 @@ namespace MvcWrench.Controllers
 
 			StatusStrip strip_trunk = new StatusStrip ();
 			strip_trunk.Name = "Mono - Trunk";
-			strip_trunk.Rows.Add (MonkeyWrenchHelper.GetRow (73, data));
+			//strip_trunk.Rows.Add (MonkeyWrenchHelper.GetRow (73, data));
 			strip_trunk.Rows.Add (MonkeyWrenchHelper.GetRow (34, data));
 			strip_trunk.Rows.Add (MonkeyWrenchHelper.GetRow (35, data));
 			strip_trunk.Rows.Add (MonkeyWrenchHelper.GetRow (36, data));
@@ -171,8 +180,8 @@ namespace MvcWrench.Controllers
 			strip_26.Rows.Add (MonkeyWrenchHelper.GetRow (98, data));
 			strip_26.Rows.Add (MonkeyWrenchHelper.GetRow (100, data));
 			strip_26.Rows.Add (MonkeyWrenchHelper.GetRow (116, data));
-			strip_26.Rows.Add (MonkeyWrenchHelper.GetRow (118, data));
-			strip_26.Rows.Add (MonkeyWrenchHelper.GetRow (121, data));
+			strip_26.Rows.Add (MonkeyWrenchHelper.GetRow (163, data));
+			strip_26.Rows.Add (MonkeyWrenchHelper.GetRow (164, data));
 			strip_26.Rows.Add (MonkeyWrenchHelper.GetRow (122, data));
 			strip_26.Rows.Add (MonkeyWrenchHelper.GetRow (125, data));
 			strip_26.Rows.Add (MonkeyWrenchHelper.GetRow (126, data));
@@ -231,6 +240,7 @@ namespace MvcWrench.Controllers
 						continue;
 
 					cell.Url = string.Format (new_rev_link, "monodevelop", row.HeaderText.Replace (": ", "-"), cell.Text.TrimStart ('r'));
+					cell.Text = Utilities.FormatRevision (cell.Text);
 				}
 			}
 
@@ -587,6 +597,22 @@ namespace MvcWrench.Controllers
 				case "monodevelop|sle-11-i586":
 					lane = 75;
 					host = 23;
+					return true;
+				case "mono|macos-10.5-i386":
+					lane = 40;
+					host = 53;
+					return true;
+				case "mono|macos-10.5-ppc":
+					lane = 40;
+					host = 55;
+					return true;
+				case "mono26|macos-10.5-i386":
+					lane = 62;
+					host = 53;
+					return true;
+				case "mono26|macos-10.5-ppc":
+					lane = 62;
+					host = 55;
 					return true;
 			}
 			
