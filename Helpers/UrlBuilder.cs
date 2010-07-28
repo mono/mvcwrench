@@ -29,7 +29,7 @@ using System.Linq;
 using System.Web;
 using MvcWrench.Models;
 
-namespace MvcWrench.Utilities
+namespace MvcWrench
 {
 	public static class UrlBuilder
 	{
