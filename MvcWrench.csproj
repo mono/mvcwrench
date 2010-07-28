@@ -83,6 +83,7 @@
     <Compile Include="Helpers\ExpiringCache.cs" />
     <Compile Include="Helpers\MonkeyWrenchHelper.cs" />
     <Compile Include="Helpers\UserHelpers.cs" />
+    <Compile Include="Helpers\Utilities.cs" />
     <Compile Include="Models\Gui\Builds\BuildStepList.cs" />
     <Compile Include="Models\Gui\Builds\Commit.cs" />
     <Compile Include="Models\Gui\DiffViewer\DiffFile.cs" />
@@ -199,7 +200,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Content Include="Content\classstatus.xml" />
-    <Content Include="Content\gravatars.txt" />
     <Content Include="Media\assembly.png" />
     <Content Include="Media\BreadCrumb\bc_bg.png" />
     <Content Include="Media\BreadCrumb\bc_separator.png" />
