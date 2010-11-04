@@ -40,15 +40,13 @@ namespace MvcWrench
 		
 		public static void ListWorkItems (FrontPageResponse data)
 		{
-			
 			foreach (int item in data.RevisionWorkHostLaneRelation) {
 				DBHostLane dbhostlane = data.HostLanes.Where (p => p.id == item).FirstOrDefault ();
 				DBLane dblane = data.Lanes.Where (p => p.id == dbhostlane.lane_id).FirstOrDefault ();
 				DBHost dbhost = data.Hosts.Where (p => p.id == dbhostlane.host_id).FirstOrDefault ();
 
-				System.Diagnostics.Trace.WriteLine (string.Format ("HostLane: {0} - Lane: {1} - Host: {2}", dbhostlane.id, dblane.lane, dbhost.host));
+				System.Diagnostics.Debug.WriteLine (string.Format ("HostLane: {0} - Lane: {1} [{3}] - Host: {2} [{4}]", dbhostlane.id, dblane.lane, dbhost.host, dblane.id, dbhost.id));
 			}
-			
 		}
 		
 		public static StatusStripRow GetRow (int hostlane, FrontPageResponse data)

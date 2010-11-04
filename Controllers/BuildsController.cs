@@ -40,7 +40,7 @@ namespace MvcWrench.Controllers
 		// GET: /Builds/Official
 		public ActionResult Index ()
 		{
-			int[] trunk_rows = new int[] { 14, 41, 111, 110, 128, 129 };
+			int[] trunk_rows = new int[] { 14, 41, 31, 110, 128, 129 };
 			int[] mono26_rows = new int[] { 75, 100, 98, 122, 163, 164 };
 			int[] mono24_rows = new int[] { 94, 101, 96, 123, 119, 120 };
 			
@@ -80,7 +80,7 @@ namespace MvcWrench.Controllers
 			//}
 			//TimeSpan remote_elapsed = DateTime.Now - start;
 			//ViewData["MsvcElapsed"] = remote_elapsed;
-			
+
 			ViewData["PageTitle"] = "MonkeyWrench - Mono Build Overview";
 			ViewData["MonkeyWrenchElapsed"] = data_elapsed;
 
@@ -459,7 +459,7 @@ namespace MvcWrench.Controllers
 					host = 2;
 					return true;
 				case "mono|sle-11-x86_64":
-					lane = 40;
+					lane = 17;
 					host = 3;
 					return true;
 				case "mono|windows-5.1-i586":
