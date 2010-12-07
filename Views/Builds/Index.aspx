@@ -6,10 +6,18 @@
 
 <asp:Content ID="Content4" ContentPlaceHolderID="right_content_placeholder" runat="server">
 <div class="right-content-pad">
+<%  if (ViewData["Timeout"] != null) { %>
+       <span style="color: Red">There was a timeout connecting to the build database.</span>
+       <br /> 
+       <br /> 
+<%  }
+%>
 <% foreach (MvcWrench.Models.StatusStrip strip in (List<MvcWrench.Models.StatusStrip>)Model) {
     Html.RenderPartial ("StatusStrip", strip); %>
            <br />
     <% } %>
+<% Html.RenderPartial ("BuildLegend"); %>
+<br />
 </div>
 
 <!--

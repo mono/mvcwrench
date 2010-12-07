@@ -822,3 +822,32 @@ div.progress-container > div.missing { background-color: #F36868; }
 div.progress-container > div.todo { background-color: #C0DEED; }
 div.progress-container > div.niex { background-color: #FFF095; }
 div.progress-container > div.error { background-color: #FFCC66; }
+
+/* Build legend */
+ul.build-legend
+{
+    list-style: none;
+    padding-left: 3px;
+    padding-bottom: 5px;
+}
+
+ul.build-legend li
+{
+    float: left;
+    margin-right: 15px;
+}
+
+ul.build-legend li div
+{
+    height: 15px;
+    width: 15px;
+    border: 1px solid #777777;
+    float: left;
+    margin-right: 7px;
+}
+
+div.fail-legend { background-color: #F36868; }
+div.testfail-legend { background-color: #FFCC66; }
+div.executing-legend { background-color: #FFF095; }
+div.success-legend { background-color: #A5E368; }
+div.queued-legend { background-color: #EBEBEB; }
